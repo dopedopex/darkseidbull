@@ -1,26 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import React, { useState, useRef, useCallback } from 'react'
 import { cn } from '@/lib/utils'
-
-type Direction = 'TOP' | 'LEFT' | 'BOTTOM' | 'RIGHT'
-
-const movingMap: Record<Direction, string> = {
-  TOP: 'radial-gradient(20.7% 50% at 50% 0%, hsl(210, 100%, 60%) 0%, rgba(50, 117, 248, 0) 100%)',
-  LEFT: 'radial-gradient(16.6% 43.1% at 0% 50%, hsl(210, 100%, 60%) 0%, rgba(50, 117, 248, 0) 100%)',
-  BOTTOM: 'radial-gradient(20.7% 50% at 50% 100%, hsl(210, 100%, 60%) 0%, rgba(50, 117, 248, 0) 100%)',
-  RIGHT: 'radial-gradient(16.2% 41.2% at 100% 50%, hsl(210, 100%, 60%) 0%, rgba(50, 117, 248, 0) 100%)',
-}
-
-const highlight =
-  'radial-gradient(75% 181.16% at 50% 50%, #3275F8 0%, rgba(50, 117, 248, 0) 100%)'
 
 export function HoverBorderGradient({
   children,
   containerClassName,
   className,
   as: Element = 'button',
-  duration = 1,
-  clockwise = true,
+  duration = 2,
   ...props
 }: React.PropsWithChildren<
   {
@@ -28,36 +14,55 @@ export function HoverBorderGradient({
     containerClassName?: string
     className?: string
     duration?: number
-    clockwise?: boolean
   } & React.HTMLAttributes<HTMLElement>
 >) {
   const [hovered, setHovered] = useState(false)
-  const [direction, setDirection] = useState<Direction>('BOTTOM')
+  const rotationRef = useRef(0)
+  const animFrameRef = useRef<number>(0)
+  const gradientRef = useRef<HTMLDivElement>(null)
+  const lastTimeRef = useRef<number>(0)
 
-  const rotateDirection = (currentDirection: Direction): Direction => {
-    const directions: Direction[] = ['TOP', 'LEFT', 'BOTTOM', 'RIGHT']
-    const currentIndex = directions.indexOf(currentDirection)
-    const nextIndex = clockwise
-      ? (currentIndex - 1 + directions.length) % directions.length
-      : (currentIndex + 1) % directions.length
-    return directions[nextIndex]
-  }
+  const animate = useCallback((timestamp: number) => {
+    if (!lastTimeRef.current) lastTimeRef.current = timestamp
+    const delta = timestamp - lastTimeRef.current
+    lastTimeRef.current = timestamp
 
-  useEffect(() => {
-    if (!hovered) {
-      const interval = setInterval(() => {
-        setDirection((prev) => rotateDirection(prev))
-      }, duration * 1000)
-      return () => clearInterval(interval)
+    // Smooth continuous rotation: 360deg per `duration` seconds
+    rotationRef.current = (rotationRef.current + (delta / (duration * 1000)) * 360) % 360
+
+    if (gradientRef.current) {
+      gradientRef.current.style.transform = `rotate(${rotationRef.current}deg)`
     }
-  }, [hovered, duration])
+
+    animFrameRef.current = requestAnimationFrame(animate)
+  }, [duration])
+
+  const startAnimation = useCallback(() => {
+    if (!animFrameRef.current) {
+      lastTimeRef.current = 0
+      animFrameRef.current = requestAnimationFrame(animate)
+    }
+  }, [animate])
+
+  const stopAnimation = useCallback(() => {
+    if (animFrameRef.current) {
+      cancelAnimationFrame(animFrameRef.current)
+      animFrameRef.current = 0
+    }
+  }, [])
+
+  // Start on mount, stop on unmount
+  React.useEffect(() => {
+    startAnimation()
+    return stopAnimation
+  }, [startAnimation, stopAnimation])
 
   return (
     <Element
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={cn(
-        'relative flex h-min w-fit flex-col flex-nowrap content-center items-center justify-center gap-10 overflow-visible rounded-full border border-transparent bg-black/40 box-decoration-clone p-px backdrop-blur-sm transition duration-500 hover:bg-black/60',
+        'relative flex h-min w-fit flex-col flex-nowrap content-center items-center justify-center overflow-hidden rounded-full border border-transparent bg-black/40 box-decoration-clone p-px backdrop-blur-sm transition duration-500 hover:bg-black/60',
         containerClassName
       )}
       {...props}
@@ -70,22 +75,25 @@ export function HoverBorderGradient({
       >
         {children}
       </div>
-      <motion.div
-        className="absolute inset-0 z-0 flex-none overflow-hidden rounded-[inherit]"
+
+      {/* Rotating gradient layer — GPU accelerated via transform */}
+      <div
+        ref={gradientRef}
+        className="absolute z-0 pointer-events-none"
         style={{
-          filter: 'blur(2px)',
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-        }}
-        initial={{ background: movingMap[direction] }}
-        animate={{
+          width: '200%',
+          height: '200%',
+          top: '-50%',
+          left: '-50%',
           background: hovered
-            ? [movingMap[direction], highlight]
-            : movingMap[direction],
+            ? 'conic-gradient(from 0deg, transparent 0deg, #3275F8 60deg, #5a9aff 120deg, #3275F8 180deg, transparent 240deg, transparent 360deg)'
+            : 'conic-gradient(from 0deg, transparent 0deg, #3275F8 40deg, transparent 80deg, transparent 360deg)',
+          filter: 'blur(4px)',
+          willChange: 'transform',
+          transition: 'background 0.4s ease',
         }}
-        transition={{ ease: 'linear', duration: duration ?? 1 }}
       />
+
       <div className="absolute inset-[2px] z-[1] flex-none rounded-[100px] bg-[#0a0a0a]" />
     </Element>
   )
