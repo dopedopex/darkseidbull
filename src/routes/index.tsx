@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { WindowsLogo } from "@/components/WindowsLogo";
+import linuxGif from "@/assets/linux-tux.gif";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -27,9 +28,9 @@ function Index() {
         <HoverBorderGradient duration={1.2}>
           <span className="flex items-center gap-2.5">
             <img
-              src="https://media1.giphy.com/media/EfHmlClbuNAGc/giphy.gif"
+              src={linuxGif}
               alt="Linux"
-              className="w-[22px] h-[22px] object-contain rounded-sm"
+              className="w-[22px] h-[22px] object-contain"
             />
             <span className="text-[13px] text-[#a0a0a0] font-normal tracking-wide">Linux</span>
           </span>
