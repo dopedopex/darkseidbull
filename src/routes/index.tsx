@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { WindowsLogo } from "@/components/WindowsLogo";
+import linuxGif from "@/assets/linux-tux.gif";
 
 export const Route = createFileRoute("/")({
   component: Index,
