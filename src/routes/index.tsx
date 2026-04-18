@@ -111,21 +111,21 @@ function Index() {
       </div>
 
       {/* Bottom hint — vaporize text effect */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 w-[320px] h-[40px]">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 w-[560px] max-w-[90vw] h-[64px]">
         <VaporizeTextCycle
           texts={["Choose your pill"]}
           font={{
-            fontFamily: "sans-serif",
-            fontSize: "16px",
-            fontWeight: 500,
+            fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+            fontSize: "32px",
+            fontWeight: 300,
           }}
           color="rgb(255, 255, 255)"
-          spread={4}
-          density={6}
+          spread={3}
+          density={5}
           animation={{
-            vaporizeDuration: 2.2,
-            fadeInDuration: 1.4,
-            waitDuration: 1.2,
+            vaporizeDuration: 2.5,
+            fadeInDuration: 1.6,
+            waitDuration: 1.5,
           }}
           direction="left-to-right"
           alignment="center"
