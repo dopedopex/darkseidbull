@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import RippleLoader from "@/components/ui/pulsating-loader";
 
@@ -9,13 +9,8 @@ export const Route = createFileRoute("/loading-blue")({
 
 function LoadingBlue() {
   const navigate = useNavigate();
-  const cameFromApp = useRef(window.history.state?.idx > 0);
 
   useEffect(() => {
-    if (!cameFromApp.current) {
-      navigate({ to: "/", replace: true });
-      return;
-    }
     const timer = setTimeout(() => {
       navigate({ to: "/portfolio", replace: true });
     }, 3000);
