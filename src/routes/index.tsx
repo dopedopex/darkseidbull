@@ -71,7 +71,7 @@ function Index() {
           aria-label="User Mode"
           className="absolute rounded-full"
           style={{
-            left: "23.1%",
+            left: "25.5%",
             top: "64.4%",
             width: "5%",
             height: "6%",
@@ -101,7 +101,7 @@ function Index() {
           aria-label="Root Access"
           className="absolute rounded-full"
           style={{
-            left: "75.7%",
+            left: "73.5%",
             top: "64.4%",
             width: "5%",
             height: "6%",
