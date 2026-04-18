@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import bullPills from "@/assets/bull-pills.png";
-import VaporizeTextCycle, { Tag } from "@/components/ui/vapour-text-effect";
+import { SpecialText } from "@/components/ui/special-text";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -11,13 +11,18 @@ function Index() {
   const navigate = useNavigate();
   const [hovered, setHovered] = useState<"blue" | "red" | null>(null);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [textKey, setTextKey] = useState(0);
 
-  const handleRootAccess = () => {
-    navigate({ to: "/os-select" });
-  };
+  // Loop the animation every ~4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTextKey((k) => k + 1);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
+  const handleRootAccess = () => navigate({ to: "/os-select" });
   const handleUserMode = () => {};
-
   const handleMouseMove = (e: React.MouseEvent) => {
     setCursorPos({ x: e.clientX, y: e.clientY });
   };
@@ -44,7 +49,7 @@ function Index() {
             width: 80,
             height: 80,
             transform: "translate(-50%, -50%)",
-            transition: "left 0.05s, top 0.05s",
+            transition: "left 0.03s linear, top 0.03s linear",
             boxShadow:
               hovered === "blue"
                 ? "0 0 40px 20px rgba(59,130,246,0.8), 0 0 80px 40px rgba(59,130,246,0.4)"
@@ -89,18 +94,14 @@ function Index() {
         </button>
       </div>
 
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 w-[560px] max-w-[90vw] h-[64px]">
-        <VaporizeTextCycle
-          texts={["Choose your pill"]}
-          font={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "32px", fontWeight: 300 }}
-          color="rgb(255, 255, 255)"
-          spread={3}
-          density={5}
-          animation={{ vaporizeDuration: 2.5, fadeInDuration: 1.6, waitDuration: 1.5 }}
-          direction="left-to-right"
-          alignment="center"
-          tag={Tag.P}
-        />
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10">
+        <SpecialText
+          key={textKey}
+          speed={16}
+          className="text-3xl text-white tracking-widest"
+        >
+          Choose your pill
+        </SpecialText>
       </div>
     </div>
   );
