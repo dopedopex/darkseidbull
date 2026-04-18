@@ -62,7 +62,7 @@ function Index() {
       )}
 
       <div className="absolute inset-0 z-10">
-        {/* BLUE HAND — full hand clickable area */}
+        {/* BLUE PALM — exact coords: left 9.6-34.1%, top 53.5-71.2% */}
         <button
           type="button"
           onClick={handleUserMode}
@@ -71,17 +71,17 @@ function Index() {
           aria-label="User Mode"
           className="absolute"
           style={{
-            left: "5%",
-            top: "38%",
-            width: "32%",
-            height: "52%",
+            left: "9.6%",
+            top: "53.5%",
+            width: "24.5%",
+            height: "17.7%",
             cursor: "none",
             background: "transparent",
             border: "none",
           }}
         >
           <span
-            className={`absolute left-1/2 -translate-x-1/2 top-4 px-4 py-2 rounded-full bg-blue-500/90 text-white text-xs md:text-sm font-medium whitespace-nowrap backdrop-blur-md border border-blue-300/40 shadow-lg shadow-blue-500/40 transition-all duration-300 ${
+            className={`absolute left-1/2 -translate-x-1/2 -top-10 px-4 py-2 rounded-full bg-blue-500/90 text-white text-xs md:text-sm font-medium whitespace-nowrap backdrop-blur-md border border-blue-300/40 shadow-lg shadow-blue-500/40 transition-all duration-300 ${
               hovered === "blue"
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-2 pointer-events-none"
@@ -91,7 +91,7 @@ function Index() {
           </span>
         </button>
 
-        {/* RED HAND — full hand clickable area */}
+        {/* RED PALM — exact coords: left 71.8-89.8%, top 47.9-70.5% */}
         <button
           type="button"
           onClick={handleRootAccess}
@@ -100,17 +100,17 @@ function Index() {
           aria-label="Root Access"
           className="absolute"
           style={{
-            left: "63%",
-            top: "38%",
-            width: "32%",
-            height: "52%",
+            left: "71.8%",
+            top: "47.9%",
+            width: "18%",
+            height: "22.6%",
             cursor: "none",
             background: "transparent",
             border: "none",
           }}
         >
           <span
-            className={`absolute left-1/2 -translate-x-1/2 top-4 px-4 py-2 rounded-full bg-red-500/90 text-white text-xs md:text-sm font-medium whitespace-nowrap backdrop-blur-md border border-red-300/40 shadow-lg shadow-red-500/40 transition-all duration-300 ${
+            className={`absolute left-1/2 -translate-x-1/2 -top-10 px-4 py-2 rounded-full bg-red-500/90 text-white text-xs md:text-sm font-medium whitespace-nowrap backdrop-blur-md border border-red-300/40 shadow-lg shadow-red-500/40 transition-all duration-300 ${
               hovered === "red"
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-2 pointer-events-none"
