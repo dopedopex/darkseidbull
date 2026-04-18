@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import RippleLoader from "@/components/ui/pulsating-loader";
 
@@ -9,10 +9,15 @@ export const Route = createFileRoute("/loading-blue")({
 
 function LoadingBlue() {
   const navigate = useNavigate();
+  const cameFromApp = useRef(window.history.state?.idx > 0);
 
   useEffect(() => {
+    if (!cameFromApp.current) {
+      navigate({ to: "/", replace: true });
+      return;
+    }
     const timer = setTimeout(() => {
-      navigate({ to: "/portfolio" });
+      navigate({ to: "/portfolio", replace: true });
     }, 3000);
     return () => clearTimeout(timer);
   }, []);
@@ -24,15 +29,10 @@ function LoadingBlue() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
-      {/* Background glow */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse at center, rgba(59,130,246,0.15) 0%, transparent 70%)",
-        }}
+        style={{ background: "radial-gradient(ellipse at center, rgba(59,130,246,0.15) 0%, transparent 70%)" }}
       />
-
-      {/* Outer ring */}
       <motion.div
         className="absolute rounded-full border border-blue-500/20"
         style={{ width: 320, height: 320 }}
@@ -45,8 +45,6 @@ function LoadingBlue() {
         animate={{ scale: [1, 1.05, 1], opacity: [0.15, 0.3, 0.15] }}
         transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
       />
-
-      {/* Main content */}
       <motion.div
         className="flex flex-col items-center gap-10 z-10"
         initial={{ y: 20, opacity: 0 }}
@@ -54,7 +52,6 @@ function LoadingBlue() {
         transition={{ duration: 0.5, delay: 0.2 }}
       >
         <RippleLoader color="blue" />
-
         <motion.p
           className="text-blue-400 text-sm tracking-[0.3em] uppercase font-mono"
           animate={{ opacity: [0.4, 1, 0.4] }}
