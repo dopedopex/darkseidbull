@@ -31,20 +31,21 @@ function Index() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60 pointer-events-none" />
 
       <div className="absolute inset-0 z-10">
-        {/* BLUE PILL — User Mode */}
+        {/* BLUE PILL — User Mode (positioned exactly on the blue pill in the image) */}
         <button
           type="button"
           onClick={handleUserMode}
           onMouseEnter={() => setHovered("blue")}
           onMouseLeave={() => setHovered(null)}
           aria-label="User Mode"
-          className="group absolute"
+          className="group absolute rounded-full"
           style={{
-            left: "23%",
-            top: "55%",
-            width: "8%",
+            left: "28%",
+            top: "62%",
+            width: "5.5%",
             aspectRatio: "1",
             transform: "translate(-50%, -50%)",
+            cursor: "pointer",
           }}
         >
           {/* Glow ring — only renders on hover */}
@@ -69,20 +70,21 @@ function Index() {
           </span>
         </button>
 
-        {/* RED PILL — Root Access */}
+        {/* RED PILL — Root Access (positioned exactly on the red pill in the image) */}
         <button
           type="button"
           onClick={handleRootAccess}
           onMouseEnter={() => setHovered("red")}
           onMouseLeave={() => setHovered(null)}
           aria-label="Root Access"
-          className="group absolute"
+          className="group absolute rounded-full"
           style={{
-            right: "23%",
-            top: "55%",
-            width: "8%",
+            left: "71.5%",
+            top: "61%",
+            width: "5.5%",
             aspectRatio: "1",
-            transform: "translate(50%, -50%)",
+            transform: "translate(-50%, -50%)",
+            cursor: "pointer",
           }}
         >
           {/* Glow ring — only renders on hover */}
@@ -109,21 +111,21 @@ function Index() {
       </div>
 
       {/* Bottom hint — vaporize text effect */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 w-[320px] h-[40px]">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 w-[560px] max-w-[90vw] h-[64px]">
         <VaporizeTextCycle
           texts={["Choose your pill"]}
           font={{
-            fontFamily: "sans-serif",
-            fontSize: "16px",
-            fontWeight: 500,
+            fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+            fontSize: "32px",
+            fontWeight: 300,
           }}
           color="rgb(255, 255, 255)"
-          spread={4}
-          density={6}
+          spread={3}
+          density={5}
           animation={{
-            vaporizeDuration: 2.2,
-            fadeInDuration: 1.4,
-            waitDuration: 1.2,
+            vaporizeDuration: 2.5,
+            fadeInDuration: 1.6,
+            waitDuration: 1.5,
           }}
           direction="left-to-right"
           alignment="center"

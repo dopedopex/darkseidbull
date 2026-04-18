@@ -100,7 +100,8 @@ export default function VaporizeTextCycle({
 
   const globalDpr = useMemo(() => {
     if (typeof window !== "undefined") {
-      return window.devicePixelRatio * 1.5 || 1;
+      // Cap DPR at 1 for smooth 120fps — particle count scales quadratically with DPR
+      return Math.min(window.devicePixelRatio || 1, 1);
     }
     return 1;
   }, []);
