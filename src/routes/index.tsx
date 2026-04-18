@@ -31,20 +31,21 @@ function Index() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60 pointer-events-none" />
 
       <div className="absolute inset-0 z-10">
-        {/* BLUE PILL — User Mode */}
+        {/* BLUE PILL — User Mode (positioned exactly on the blue pill in the image) */}
         <button
           type="button"
           onClick={handleUserMode}
           onMouseEnter={() => setHovered("blue")}
           onMouseLeave={() => setHovered(null)}
           aria-label="User Mode"
-          className="group absolute"
+          className="group absolute rounded-full"
           style={{
-            left: "23%",
-            top: "55%",
-            width: "8%",
+            left: "28%",
+            top: "62%",
+            width: "5.5%",
             aspectRatio: "1",
             transform: "translate(-50%, -50%)",
+            cursor: "pointer",
           }}
         >
           {/* Glow ring — only renders on hover */}
