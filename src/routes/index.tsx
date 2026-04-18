@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import { SpiralAnimation } from "@/components/ui/spiral-animation";
 import { WindowsLogo } from "@/components/WindowsLogo";
 import linuxGif from "@/assets/linux-tux.gif";
 
@@ -22,11 +23,11 @@ function Index() {
   const handleEnded = () => setPlaying(false);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#050505] relative overflow-hidden">
-      {/* Subtle radial glow */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        background: 'radial-gradient(ellipse 55% 45% at 50% 50%, rgba(50,117,248,0.04) 0%, transparent 65%)'
-      }} />
+    <div className="flex min-h-screen items-center justify-center bg-black relative overflow-hidden">
+      {/* Spiral animation background */}
+      <div className="absolute inset-0 z-0">
+        <SpiralAnimation />
+      </div>
 
       <div className="flex items-center gap-6 relative z-10">
         {/* Windows Button */}
