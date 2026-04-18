@@ -45,8 +45,8 @@ function Index() {
           style={{
             left: cursorPos.x,
             top: cursorPos.y,
-            width: 80,
-            height: 80,
+            width: 60,
+            height: 60,
             transform: "translate(-50%, -50%)",
             transition: "left 0.03s linear, top 0.03s linear",
             boxShadow:
@@ -62,19 +62,20 @@ function Index() {
       )}
 
       <div className="absolute inset-0 z-10">
-        {/* BLUE PALM — exact coords: left 9.6-34.1%, top 53.5-71.2% */}
+        {/* BLUE PILL — center: 23.1%, 64.4% */}
         <button
           type="button"
           onClick={handleUserMode}
           onMouseEnter={() => setHovered("blue")}
           onMouseLeave={() => setHovered(null)}
           aria-label="User Mode"
-          className="absolute"
+          className="absolute rounded-full"
           style={{
-            left: "9.6%",
-            top: "53.5%",
-            width: "24.5%",
-            height: "17.7%",
+            left: "23.1%",
+            top: "64.4%",
+            width: "5%",
+            height: "6%",
+            transform: "translate(-50%, -50%)",
             cursor: "none",
             background: "transparent",
             border: "none",
@@ -91,19 +92,20 @@ function Index() {
           </span>
         </button>
 
-        {/* RED PALM — exact coords: left 71.8-89.8%, top 47.9-70.5% */}
+        {/* RED PILL — center: 75.7%, 64.4% */}
         <button
           type="button"
           onClick={handleRootAccess}
           onMouseEnter={() => setHovered("red")}
           onMouseLeave={() => setHovered(null)}
           aria-label="Root Access"
-          className="absolute"
+          className="absolute rounded-full"
           style={{
-            left: "71.8%",
-            top: "47.9%",
-            width: "18%",
-            height: "22.6%",
+            left: "75.7%",
+            top: "64.4%",
+            width: "5%",
+            height: "6%",
+            transform: "translate(-50%, -50%)",
             cursor: "none",
             background: "transparent",
             border: "none",
