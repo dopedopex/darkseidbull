@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import bullPills from "@/assets/bull-pills.png";
 import { SpecialText } from "@/components/ui/special-text";
 
@@ -13,7 +13,6 @@ function Index() {
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [textKey, setTextKey] = useState(0);
 
-  // Loop the animation every ~4 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setTextKey((k) => k + 1);
@@ -63,33 +62,61 @@ function Index() {
       )}
 
       <div className="absolute inset-0 z-10">
+        {/* BLUE HAND — full hand clickable area */}
         <button
           type="button"
           onClick={handleUserMode}
           onMouseEnter={() => setHovered("blue")}
           onMouseLeave={() => setHovered(null)}
           aria-label="User Mode"
-          className="group absolute rounded-full"
-          style={{ left: "28%", top: "62%", width: "5.5%", aspectRatio: "1", transform: "translate(-50%, -50%)", cursor: "none" }}
+          className="absolute"
+          style={{
+            left: "5%",
+            top: "38%",
+            width: "32%",
+            height: "52%",
+            cursor: "none",
+            background: "transparent",
+            border: "none",
+          }}
         >
-          <span className={`absolute left-1/2 -translate-x-1/2 -top-14 px-4 py-2 rounded-full bg-blue-500/90 text-white text-xs md:text-sm font-medium whitespace-nowrap backdrop-blur-md border border-blue-300/40 shadow-lg shadow-blue-500/40 transition-all duration-300 ${hovered === "blue" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"}`}>
+          <span
+            className={`absolute left-1/2 -translate-x-1/2 top-4 px-4 py-2 rounded-full bg-blue-500/90 text-white text-xs md:text-sm font-medium whitespace-nowrap backdrop-blur-md border border-blue-300/40 shadow-lg shadow-blue-500/40 transition-all duration-300 ${
+              hovered === "blue"
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-2 pointer-events-none"
+            }`}
+          >
             User Mode
-            <span className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-2 h-2 rotate-45 bg-blue-500/90 border-r border-b border-blue-300/40" />
           </span>
         </button>
 
+        {/* RED HAND — full hand clickable area */}
         <button
           type="button"
           onClick={handleRootAccess}
           onMouseEnter={() => setHovered("red")}
           onMouseLeave={() => setHovered(null)}
           aria-label="Root Access"
-          className="group absolute rounded-full"
-          style={{ left: "71.5%", top: "61%", width: "5.5%", aspectRatio: "1", transform: "translate(-50%, -50%)", cursor: "none" }}
+          className="absolute"
+          style={{
+            left: "63%",
+            top: "38%",
+            width: "32%",
+            height: "52%",
+            cursor: "none",
+            background: "transparent",
+            border: "none",
+          }}
         >
-          <span className={`absolute left-1/2 -translate-x-1/2 -top-14 px-4 py-2 rounded-full bg-red-500/90 text-white text-xs md:text-sm font-medium whitespace-nowrap backdrop-blur-md border border-red-300/40 shadow-lg shadow-red-500/40 transition-all duration-300 ${hovered === "red" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"}`}>
+          <span
+            className={`absolute left-1/2 -translate-x-1/2 top-4 px-4 py-2 rounded-full bg-red-500/90 text-white text-xs md:text-sm font-medium whitespace-nowrap backdrop-blur-md border border-red-300/40 shadow-lg shadow-red-500/40 transition-all duration-300 ${
+              hovered === "red"
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-2 pointer-events-none"
+            }`}
+          >
             Root Access
-            <span className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-2 h-2 rotate-45 bg-red-500/90 border-r border-b border-red-300/40" />
           </span>
         </button>
       </div>
