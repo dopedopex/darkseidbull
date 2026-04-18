@@ -1,71 +1,123 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useRef, useState } from "react";
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
-import { SpiralAnimation } from "@/components/ui/spiral-animation";
-import { WindowsLogo } from "@/components/WindowsLogo";
-import linuxGif from "@/assets/linux-tux.gif";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
+import bullPills from "@/assets/bull-pills.png";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
 function Index() {
-  const [playing, setPlaying] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const navigate = useNavigate();
+  const [hovered, setHovered] = useState<"blue" | "red" | null>(null);
 
-  const handleWindowsClick = () => {
-    setPlaying(true);
-    setTimeout(() => {
-      videoRef.current?.play().catch(() => {});
-    }, 50);
+  const handleRootAccess = () => {
+    navigate({ to: "/os-select" });
   };
 
-  const handleEnded = () => setPlaying(false);
+  const handleUserMode = () => {
+    // Coming soon — user mode concept will be added later
+  };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-black relative overflow-hidden">
-      {/* Spiral animation background */}
-      <div className="absolute inset-0 z-0">
-        <SpiralAnimation />
-      </div>
+    <div className="relative min-h-screen w-full overflow-hidden bg-black flex items-center justify-center">
+      {/* Background image — full bleed */}
+      <img
+        src={bullPills}
+        alt="Choose your path"
+        className="absolute inset-0 w-full h-full object-cover object-center select-none pointer-events-none"
+        draggable={false}
+      />
 
-      <div className="flex items-center gap-6 relative z-10">
-        {/* Windows Button */}
-        <HoverBorderGradient duration={1.2} onClick={handleWindowsClick} style={{ cursor: 'pointer' }}>
-          <span className="flex items-center gap-2.5">
-            <WindowsLogo className="w-[18px] h-[18px]" />
-            <span className="text-[13px] text-[#a0a0a0] font-normal tracking-wide">Windows</span>
-          </span>
-        </HoverBorderGradient>
+      {/* Subtle dark vignette so text/tooltips pop */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60 pointer-events-none" />
 
-        {/* Linux Button */}
-        <HoverBorderGradient duration={1.2}>
-          <span className="flex items-center gap-2.5">
-            <img
-              src={linuxGif}
-              alt="Linux"
-              className="w-[22px] h-[22px] object-contain"
-            />
-            <span className="text-[13px] text-[#a0a0a0] font-normal tracking-wide">Linux</span>
-          </span>
-        </HoverBorderGradient>
-      </div>
-
-      {/* Fullscreen Windows boot video overlay */}
-      {playing && (
-        <div
-          className="fixed inset-0 z-50 bg-black flex items-center justify-center cursor-pointer"
-          onClick={() => setPlaying(false)}
+      {/* Interactive pill hotspots overlay — positioned over the bull's hands */}
+      <div className="absolute inset-0 z-10">
+        {/* BLUE PILL — User Mode (left hand) */}
+        <button
+          type="button"
+          onClick={handleUserMode}
+          onMouseEnter={() => setHovered("blue")}
+          onMouseLeave={() => setHovered(null)}
+          aria-label="User Mode"
+          className="group absolute"
+          style={{
+            left: "23%",
+            top: "55%",
+            width: "8%",
+            aspectRatio: "1",
+            transform: "translate(-50%, -50%)",
+          }}
         >
-          <video
-            ref={videoRef}
-            src="/windows-boot.mp4"
-            className="w-full h-full object-contain"
-            onEnded={handleEnded}
-            playsInline
+          {/* Glow ring on hover */}
+          <span
+            className="absolute inset-0 rounded-full transition-all duration-300 group-hover:scale-125"
+            style={{
+              boxShadow:
+                hovered === "blue"
+                  ? "0 0 40px 10px rgba(59,130,246,0.7), 0 0 80px 20px rgba(59,130,246,0.4)"
+                  : "0 0 0 0 rgba(59,130,246,0)",
+            }}
           />
-        </div>
-      )}
+          {/* Tooltip cloud */}
+          <span
+            className={`absolute left-1/2 -translate-x-1/2 -top-14 px-4 py-2 rounded-full bg-blue-500/90 text-white text-xs md:text-sm font-medium whitespace-nowrap backdrop-blur-md border border-blue-300/40 shadow-lg shadow-blue-500/40 transition-all duration-300 ${
+              hovered === "blue"
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-2 pointer-events-none"
+            }`}
+          >
+            User Mode
+            <span className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-2 h-2 rotate-45 bg-blue-500/90 border-r border-b border-blue-300/40" />
+          </span>
+        </button>
+
+        {/* RED PILL — Root Access (right hand) */}
+        <button
+          type="button"
+          onClick={handleRootAccess}
+          onMouseEnter={() => setHovered("red")}
+          onMouseLeave={() => setHovered(null)}
+          aria-label="Root Access"
+          className="group absolute"
+          style={{
+            right: "23%",
+            top: "55%",
+            width: "8%",
+            aspectRatio: "1",
+            transform: "translate(50%, -50%)",
+          }}
+        >
+          {/* Glow ring on hover */}
+          <span
+            className="absolute inset-0 rounded-full transition-all duration-300 group-hover:scale-125"
+            style={{
+              boxShadow:
+                hovered === "red"
+                  ? "0 0 40px 10px rgba(239,68,68,0.7), 0 0 80px 20px rgba(239,68,68,0.4)"
+                  : "0 0 0 0 rgba(239,68,68,0)",
+            }}
+          />
+          {/* Tooltip cloud */}
+          <span
+            className={`absolute left-1/2 -translate-x-1/2 -top-14 px-4 py-2 rounded-full bg-red-500/90 text-white text-xs md:text-sm font-medium whitespace-nowrap backdrop-blur-md border border-red-300/40 shadow-lg shadow-red-500/40 transition-all duration-300 ${
+              hovered === "red"
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-2 pointer-events-none"
+            }`}
+          >
+            Root Access
+            <span className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-2 h-2 rotate-45 bg-red-500/90 border-r border-b border-red-300/40" />
+          </span>
+        </button>
+      </div>
+
+      {/* Bottom hint */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-center">
+        <p className="text-white/60 text-xs md:text-sm tracking-[0.3em] uppercase">
+          Choose your pill
+        </p>
+      </div>
     </div>
   );
 }
