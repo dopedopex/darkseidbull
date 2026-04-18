@@ -70,20 +70,21 @@ function Index() {
           </span>
         </button>
 
-        {/* RED PILL — Root Access */}
+        {/* RED PILL — Root Access (positioned exactly on the red pill in the image) */}
         <button
           type="button"
           onClick={handleRootAccess}
           onMouseEnter={() => setHovered("red")}
           onMouseLeave={() => setHovered(null)}
           aria-label="Root Access"
-          className="group absolute"
+          className="group absolute rounded-full"
           style={{
-            right: "23%",
-            top: "55%",
-            width: "8%",
+            left: "71.5%",
+            top: "61%",
+            width: "5.5%",
             aspectRatio: "1",
-            transform: "translate(50%, -50%)",
+            transform: "translate(-50%, -50%)",
+            cursor: "pointer",
           }}
         >
           {/* Glow ring — only renders on hover */}
