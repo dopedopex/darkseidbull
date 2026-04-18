@@ -71,7 +71,7 @@ function Index() {
           aria-label="User Mode"
           className="absolute rounded-full"
           style={{
-            left: "20.5%",
+            left: "30.5%",
             top: "64.4%",
             width: "5%",
             height: "6%",
