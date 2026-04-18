@@ -20,8 +20,8 @@ function Index() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleRootAccess = () => navigate({ to: "/os-select" });
-  const handleUserMode = () => {};
+  const handleRootAccess = () => navigate({ to: "/loading-red" });
+  const handleUserMode = () => navigate({ to: "/loading-blue" });
   const handleMouseMove = (e: React.MouseEvent) => {
     setCursorPos({ x: e.clientX, y: e.clientY });
   };

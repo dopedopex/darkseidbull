@@ -10,11 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as OsSelectRouteImport } from './routes/os-select'
+import { Route as LoadingRedRouteImport } from './routes/loading-red'
+import { Route as LoadingBlueRouteImport } from './routes/loading-blue'
 import { Route as IndexRouteImport } from './routes/index'
 
 const OsSelectRoute = OsSelectRouteImport.update({
   id: '/os-select',
   path: '/os-select',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoadingRedRoute = LoadingRedRouteImport.update({
+  id: '/loading-red',
+  path: '/loading-red',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoadingBlueRoute = LoadingBlueRouteImport.update({
+  id: '/loading-blue',
+  path: '/loading-blue',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +37,35 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/loading-blue': typeof LoadingBlueRoute
+  '/loading-red': typeof LoadingRedRoute
   '/os-select': typeof OsSelectRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/loading-blue': typeof LoadingBlueRoute
+  '/loading-red': typeof LoadingRedRoute
   '/os-select': typeof OsSelectRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/loading-blue': typeof LoadingBlueRoute
+  '/loading-red': typeof LoadingRedRoute
   '/os-select': typeof OsSelectRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/os-select'
+  fullPaths: '/' | '/loading-blue' | '/loading-red' | '/os-select'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/os-select'
-  id: '__root__' | '/' | '/os-select'
+  to: '/' | '/loading-blue' | '/loading-red' | '/os-select'
+  id: '__root__' | '/' | '/loading-blue' | '/loading-red' | '/os-select'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LoadingBlueRoute: typeof LoadingBlueRoute
+  LoadingRedRoute: typeof LoadingRedRoute
   OsSelectRoute: typeof OsSelectRoute
 }
 
@@ -56,6 +76,20 @@ declare module '@tanstack/react-router' {
       path: '/os-select'
       fullPath: '/os-select'
       preLoaderRoute: typeof OsSelectRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/loading-red': {
+      id: '/loading-red'
+      path: '/loading-red'
+      fullPath: '/loading-red'
+      preLoaderRoute: typeof LoadingRedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/loading-blue': {
+      id: '/loading-blue'
+      path: '/loading-blue'
+      fullPath: '/loading-blue'
+      preLoaderRoute: typeof LoadingBlueRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,6 +104,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LoadingBlueRoute: LoadingBlueRoute,
+  LoadingRedRoute: LoadingRedRoute,
   OsSelectRoute: OsSelectRoute,
 }
 export const routeTree = rootRouteImport
