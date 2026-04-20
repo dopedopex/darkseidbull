@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as OsSelectRouteImport } from './routes/os-select'
 import { Route as LoadingRedRouteImport } from './routes/loading-red'
 import { Route as LoadingBlueRouteImport } from './routes/loading-blue'
 import { Route as IndexRouteImport } from './routes/index'
 
+const PortfolioRoute = PortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OsSelectRoute = OsSelectRouteImport.update({
   id: '/os-select',
   path: '/os-select',
@@ -40,12 +46,14 @@ export interface FileRoutesByFullPath {
   '/loading-blue': typeof LoadingBlueRoute
   '/loading-red': typeof LoadingRedRoute
   '/os-select': typeof OsSelectRoute
+  '/portfolio': typeof PortfolioRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/loading-blue': typeof LoadingBlueRoute
   '/loading-red': typeof LoadingRedRoute
   '/os-select': typeof OsSelectRoute
+  '/portfolio': typeof PortfolioRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,25 @@ export interface FileRoutesById {
   '/loading-blue': typeof LoadingBlueRoute
   '/loading-red': typeof LoadingRedRoute
   '/os-select': typeof OsSelectRoute
+  '/portfolio': typeof PortfolioRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/loading-blue' | '/loading-red' | '/os-select'
+  fullPaths:
+    | '/'
+    | '/loading-blue'
+    | '/loading-red'
+    | '/os-select'
+    | '/portfolio'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/loading-blue' | '/loading-red' | '/os-select'
-  id: '__root__' | '/' | '/loading-blue' | '/loading-red' | '/os-select'
+  to: '/' | '/loading-blue' | '/loading-red' | '/os-select' | '/portfolio'
+  id:
+    | '__root__'
+    | '/'
+    | '/loading-blue'
+    | '/loading-red'
+    | '/os-select'
+    | '/portfolio'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,10 +87,18 @@ export interface RootRouteChildren {
   LoadingBlueRoute: typeof LoadingBlueRoute
   LoadingRedRoute: typeof LoadingRedRoute
   OsSelectRoute: typeof OsSelectRoute
+  PortfolioRoute: typeof PortfolioRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/portfolio': {
+      id: '/portfolio'
+      path: '/portfolio'
+      fullPath: '/portfolio'
+      preLoaderRoute: typeof PortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/os-select': {
       id: '/os-select'
       path: '/os-select'
@@ -107,6 +135,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoadingBlueRoute: LoadingBlueRoute,
   LoadingRedRoute: LoadingRedRoute,
   OsSelectRoute: OsSelectRoute,
+  PortfolioRoute: PortfolioRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
