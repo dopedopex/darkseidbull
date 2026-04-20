@@ -112,10 +112,10 @@ function Index() {
                   style={{
                     left: "29%",
                     top: "64.4%",
-                    width: "5%",
-                    height: "6%",
-                    transform: "translate(-50%, -50%)",
-                    cursor: "none",
+                    width: isMobile ? "18%" : "5%",
+            height: isMobile ? "12%" : "6%",
+            transform: "translate(-50%, -50%)",
+            cursor: isMobile ? "pointer" : "none",
                     background: "transparent",
                     border: "none",
                   }}
@@ -142,10 +142,10 @@ function Index() {
                   style={{
                     left: "68.5%",
                     top: "64.4%",
-                    width: "5%",
-                    height: "6%",
+                    width: isMobile ? "18%" : "5%",
+                    height: isMobile ? "12%" : "6%",
                     transform: "translate(-50%, -50%)",
-                    cursor: "none",
+                    cursor: isMobile ? "pointer" : "none",
                     background: "transparent",
                     border: "none",
                   }}
