@@ -286,7 +286,7 @@ function ContributionGraph() {
       <div className="text-xs text-gray-400 mb-3 font-semibold">530 contributions in the last year</div>
       <svg viewBox="0 0 676 111" className="w-full">
         {months.map((m, i) => <text key={m} x={i * 52} y="10" fontSize="8" fill="#6b7280">{m}</text>)}
-        {fixed.map((week, w) => week.map((val, d) => <rect key={} x={w * 13} y={d * 13 + 14} width="10" height="10" rx="2" fill={colors[val]} />))}
+        {fixed.map((week, w) => week.map((val, d) => <rect key={`${w}-${d}`} x={w * 13} y={d * 13 + 14} width="10" height="10" rx="2" fill={colors[val]} />))}
       </svg>
       <div className="flex items-center gap-2 mt-2 justify-end">
         <span className="text-xs text-gray-600">Less</span>
