@@ -17,6 +17,14 @@ function Index() {
   const [hovered, setHovered] = useState<"blue" | "red" | null>(null);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [textKey, setTextKey] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => setTextKey((k) => k + 1), 4000);
@@ -39,7 +47,10 @@ function Index() {
   };
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-black" onMouseMove={handleMouseMove}>
+    <div
+      className="relative min-h-screen w-full overflow-hidden bg-black"
+      onMouseMove={!isMobile ? handleMouseMove : undefined}
+    >
       <AnimatePresence mode="wait">
 
         {/* HOME SCREEN */}
@@ -52,15 +63,21 @@ function Index() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
+            {/* IMAGE */}
             <img
               src={bullPills}
               alt="Choose your path"
-              className="absolute inset-0 w-full h-full object-cover object-center select-none pointer-events-none"
+              className="absolute inset-0 w-full h-full select-none pointer-events-none"
+              style={{
+                objectFit: "cover",
+                objectPosition: isMobile ? "40% center" : "center center",
+              }}
               draggable={false}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60 pointer-events-none" />
 
-            {hovered && (
+            {/* DESKTOP CURSOR GLOW */}
+            {!isMobile && hovered && (
               <span
                 className="pointer-events-none fixed z-50 rounded-full"
                 style={{
@@ -82,40 +99,100 @@ function Index() {
               />
             )}
 
-            <div className="absolute inset-0 z-10">
-              {/* BLUE PILL */}
-              <button
-                type="button"
-                onClick={() => setScreen("loading-blue")}
-                onMouseEnter={() => setHovered("blue")}
-                onMouseLeave={() => setHovered(null)}
-                aria-label="User Mode"
-                className="absolute rounded-full"
-                style={{ left: "29%", top: "64.4%", width: "5%", height: "6%", transform: "translate(-50%, -50%)", cursor: "none", background: "transparent", border: "none" }}
-              >
-                <span className={`absolute left-1/2 -translate-x-1/2 -top-10 px-4 py-2 rounded-full bg-blue-500/90 text-white text-xs md:text-sm font-medium whitespace-nowrap backdrop-blur-md border border-blue-300/40 shadow-lg shadow-blue-500/40 transition-all duration-300 ${hovered === "blue" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"}`}>
-                  User Mode
-                </span>
-              </button>
+            {/* DESKTOP INVISIBLE BUTTONS OVER PILLS */}
+            {!isMobile && (
+              <div className="absolute inset-0 z-10">
+                {/* BLUE PILL */}
+                <button
+                  type="button"
+                  onClick={() => setScreen("loading-blue")}
+                  onMouseEnter={() => setHovered("blue")}
+                  onMouseLeave={() => setHovered(null)}
+                  aria-label="User Mode"
+                  className="absolute rounded-full"
+                  style={{
+                    left: "29%",
+                    top: "64.4%",
+                    width: "5%",
+                    height: "6%",
+                    transform: "translate(-50%, -50%)",
+                    cursor: "none",
+                    background: "transparent",
+                    border: "none",
+                  }}
+                >
+                  <span
+                    className={`absolute left-1/2 -translate-x-1/2 -top-10 px-4 py-2 rounded-full bg-blue-500/90 text-white text-xs md:text-sm font-medium whitespace-nowrap backdrop-blur-md border border-blue-300/40 shadow-lg shadow-blue-500/40 transition-all duration-300 ${
+                      hovered === "blue"
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-2 pointer-events-none"
+                    }`}
+                  >
+                    User Mode
+                  </span>
+                </button>
 
-              {/* RED PILL */}
-              <button
-                type="button"
-                onClick={() => setScreen("loading-red")}
-                onMouseEnter={() => setHovered("red")}
-                onMouseLeave={() => setHovered(null)}
-                aria-label="Root Access"
-                className="absolute rounded-full"
-                style={{ left: "68.5%", top: "64.4%", width: "5%", height: "6%", transform: "translate(-50%, -50%)", cursor: "none", background: "transparent", border: "none" }}
-              >
-                <span className={`absolute left-1/2 -translate-x-1/2 -top-10 px-4 py-2 rounded-full bg-red-500/90 text-white text-xs md:text-sm font-medium whitespace-nowrap backdrop-blur-md border border-red-300/40 shadow-lg shadow-red-500/40 transition-all duration-300 ${hovered === "red" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"}`}>
-                  Root Access
-                </span>
-              </button>
-            </div>
+                {/* RED PILL */}
+                <button
+                  type="button"
+                  onClick={() => setScreen("loading-red")}
+                  onMouseEnter={() => setHovered("red")}
+                  onMouseLeave={() => setHovered(null)}
+                  aria-label="Root Access"
+                  className="absolute rounded-full"
+                  style={{
+                    left: "68.5%",
+                    top: "64.4%",
+                    width: "5%",
+                    height: "6%",
+                    transform: "translate(-50%, -50%)",
+                    cursor: "none",
+                    background: "transparent",
+                    border: "none",
+                  }}
+                >
+                  <span
+                    className={`absolute left-1/2 -translate-x-1/2 -top-10 px-4 py-2 rounded-full bg-red-500/90 text-white text-xs md:text-sm font-medium whitespace-nowrap backdrop-blur-md border border-red-300/40 shadow-lg shadow-red-500/40 transition-all duration-300 ${
+                      hovered === "red"
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-2 pointer-events-none"
+                    }`}
+                  >
+                    Root Access
+                  </span>
+                </button>
+              </div>
+            )}
 
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10">
-              <SpecialText key={textKey} speed={16} className="text-3xl text-white tracking-widest">
+            {/* MOBILE TAP BUTTONS */}
+            {isMobile && (
+              <div className="absolute bottom-20 left-0 right-0 z-20 flex justify-center gap-6 px-8">
+                {/* BLUE */}
+                <button
+                  type="button"
+                  onClick={() => setScreen("loading-blue")}
+                  className="flex-1 flex flex-col items-center gap-2 py-4 rounded-2xl backdrop-blur-md border border-blue-400/40 bg-blue-500/20 active:bg-blue-500/40 transition-all"
+                  style={{ boxShadow: "0 0 20px 4px rgba(59,130,246,0.3)" }}
+                >
+                  <span className="w-10 h-4 rounded-full bg-blue-400" style={{ boxShadow: "0 0 12px 4px rgba(59,130,246,0.8)" }} />
+                  <span className="text-blue-300 text-sm font-semibold tracking-widest uppercase">User Mode</span>
+                </button>
+
+                {/* RED */}
+                <button
+                  type="button"
+                  onClick={() => setScreen("loading-red")}
+                  className="flex-1 flex flex-col items-center gap-2 py-4 rounded-2xl backdrop-blur-md border border-red-400/40 bg-red-500/20 active:bg-red-500/40 transition-all"
+                  style={{ boxShadow: "0 0 20px 4px rgba(239,68,68,0.3)" }}
+                >
+                  <span className="w-10 h-4 rounded-full bg-red-400" style={{ boxShadow: "0 0 12px 4px rgba(239,68,68,0.8)" }} />
+                  <span className="text-red-300 text-sm font-semibold tracking-widest uppercase">Root Access</span>
+                </button>
+              </div>
+            )}
+
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10" style={isMobile ? {bottom: '5.5rem'} : {}}>
+              <SpecialText key={textKey} speed={16} className="text-xl md:text-3xl text-white tracking-widest">
                 Choose your pill
               </SpecialText>
             </div>
