@@ -46,18 +46,18 @@ class AnimationController {
     }
 
     private setupRandomGenerator() {
-        const originalRandom = Math.random
-        const customRandom = () => {
-            let seed = 1234
-            return () => {
-                seed = (seed * 9301 + 49297) % 233280
-                return seed / 233280
-            }
+    const originalRandom = Math.random
+    const customRandom = () => {
+        let seed = 1234
+        return () => {
+            seed = (seed * 9301 + 49297) % 233280
+            return seed / 233280
         }
-        Math.random = customRandom()
-        this.createStars()
-        Math.random = originalRandom
     }
+    Math.random = customRandom()
+    // createStars() ← yeh line hata do, duplicate hai
+    Math.random = originalRandom
+}
 
     private createStars() {
         this.stars = []
@@ -196,8 +196,9 @@ class AnimationController {
     }
 
     public destroy() {
-        this.timeline.kill()
-    }
+    this.timeline.kill()
+    gsap.killTweensOf(this)  // ← yeh add karo
+}
 }
 
 class Star {
