@@ -9,6 +9,7 @@ type FallingPatternProps = React.ComponentProps<"div"> & {
   backgroundColor?: string;
   duration?: number;
   blurIntensity?: string;
+  density?: number;
 };
 
 export function FallingPattern({
@@ -16,37 +17,66 @@ export function FallingPattern({
   backgroundColor = "var(--background)",
   duration = 150,
   blurIntensity = "1em",
+  density = 1,
   className,
   ...props
 }: FallingPatternProps) {
   const generateBackgroundImage = () => {
-    const rows = [
-      [235, 117.5], [252, 126], [150, 75], [253, 126.5], [204, 102],
-      [134, 67], [179, 89.5], [299, 149.5], [215, 107.5], [281, 140.5],
-      [158, 79], [210, 105],
+    const patterns = [
+      `radial-gradient(4px 100px at 0px 235px, ${color}, transparent)`,
+      `radial-gradient(4px 100px at 300px 235px, ${color}, transparent)`,
+      `radial-gradient(1.5px 1.5px at 150px 117.5px, ${color} 100%, transparent 150%)`,
+      `radial-gradient(4px 100px at 0px 252px, ${color}, transparent)`,
+      `radial-gradient(4px 100px at 300px 252px, ${color}, transparent)`,
+      `radial-gradient(1.5px 1.5px at 150px 126px, ${color} 100%, transparent 150%)`,
+      `radial-gradient(4px 100px at 0px 150px, ${color}, transparent)`,
+      `radial-gradient(4px 100px at 300px 150px, ${color}, transparent)`,
+      `radial-gradient(1.5px 1.5px at 150px 75px, ${color} 100%, transparent 150%)`,
+      `radial-gradient(4px 100px at 0px 253px, ${color}, transparent)`,
+      `radial-gradient(4px 100px at 300px 253px, ${color}, transparent)`,
+      `radial-gradient(1.5px 1.5px at 150px 126.5px, ${color} 100%, transparent 150%)`,
+      `radial-gradient(4px 100px at 0px 204px, ${color}, transparent)`,
+      `radial-gradient(4px 100px at 300px 204px, ${color}, transparent)`,
+      `radial-gradient(1.5px 1.5px at 150px 102px, ${color} 100%, transparent 150%)`,
+      `radial-gradient(4px 100px at 0px 134px, ${color}, transparent)`,
+      `radial-gradient(4px 100px at 300px 134px, ${color}, transparent)`,
+      `radial-gradient(1.5px 1.5px at 150px 67px, ${color} 100%, transparent 150%)`,
+      `radial-gradient(4px 100px at 0px 179px, ${color}, transparent)`,
+      `radial-gradient(4px 100px at 300px 179px, ${color}, transparent)`,
+      `radial-gradient(1.5px 1.5px at 150px 89.5px, ${color} 100%, transparent 150%)`,
+      `radial-gradient(4px 100px at 0px 299px, ${color}, transparent)`,
+      `radial-gradient(4px 100px at 300px 299px, ${color}, transparent)`,
+      `radial-gradient(1.5px 1.5px at 150px 149.5px, ${color} 100%, transparent 150%)`,
+      `radial-gradient(4px 100px at 0px 215px, ${color}, transparent)`,
+      `radial-gradient(4px 100px at 300px 215px, ${color}, transparent)`,
+      `radial-gradient(1.5px 1.5px at 150px 107.5px, ${color} 100%, transparent 150%)`,
+      `radial-gradient(4px 100px at 0px 281px, ${color}, transparent)`,
+      `radial-gradient(4px 100px at 300px 281px, ${color}, transparent)`,
+      `radial-gradient(1.5px 1.5px at 150px 140.5px, ${color} 100%, transparent 150%)`,
+      `radial-gradient(4px 100px at 0px 158px, ${color}, transparent)`,
+      `radial-gradient(4px 100px at 300px 158px, ${color}, transparent)`,
+      `radial-gradient(1.5px 1.5px at 150px 79px, ${color} 100%, transparent 150%)`,
+      `radial-gradient(4px 100px at 0px 210px, ${color}, transparent)`,
+      `radial-gradient(4px 100px at 300px 210px, ${color}, transparent)`,
+      `radial-gradient(1.5px 1.5px at 150px 105px, ${color} 100%, transparent 150%)`,
     ];
-    const patterns: string[] = [];
-    rows.forEach(([y1, y2]) => {
-      patterns.push(`radial-gradient(4px 100px at 0px ${y1}px, ${color}, transparent)`);
-      patterns.push(`radial-gradient(4px 100px at 300px ${y1}px, ${color}, transparent)`);
-      patterns.push(`radial-gradient(1.5px 1.5px at 150px ${y2}px, ${color} 100%, transparent 150%)`);
-    });
+
     return patterns.join(", ");
   };
 
   const backgroundSizes = [
-    "300px 235px","300px 235px","300px 235px",
-    "300px 252px","300px 252px","300px 252px",
-    "300px 150px","300px 150px","300px 150px",
-    "300px 253px","300px 253px","300px 253px",
-    "300px 204px","300px 204px","300px 204px",
-    "300px 134px","300px 134px","300px 134px",
-    "300px 179px","300px 179px","300px 179px",
-    "300px 299px","300px 299px","300px 299px",
-    "300px 215px","300px 215px","300px 215px",
-    "300px 281px","300px 281px","300px 281px",
-    "300px 158px","300px 158px","300px 158px",
-    "300px 210px","300px 210px","300px 210px",
+    "300px 235px", "300px 235px", "300px 235px",
+    "300px 252px", "300px 252px", "300px 252px",
+    "300px 150px", "300px 150px", "300px 150px",
+    "300px 253px", "300px 253px", "300px 253px",
+    "300px 204px", "300px 204px", "300px 204px",
+    "300px 134px", "300px 134px", "300px 134px",
+    "300px 179px", "300px 179px", "300px 179px",
+    "300px 299px", "300px 299px", "300px 299px",
+    "300px 215px", "300px 215px", "300px 215px",
+    "300px 281px", "300px 281px", "300px 281px",
+    "300px 158px", "300px 158px", "300px 158px",
+    "300px 210px", "300px 210px", "300px 210px",
   ].join(", ");
 
   const startPositions =
@@ -65,6 +95,7 @@ export function FallingPattern({
         style={{
           backgroundImage: generateBackgroundImage(),
           backgroundSize: backgroundSizes,
+          opacity: Math.max(0.4, Math.min(density, 1.6)),
         }}
         initial={{ backgroundPosition: startPositions }}
         animate={{ backgroundPosition: endPositions }}
@@ -75,7 +106,7 @@ export function FallingPattern({
         style={{
           backdropFilter: `blur(${blurIntensity})`,
           WebkitBackdropFilter: `blur(${blurIntensity})`,
-          backgroundColor: `color-mix(in oklab, ${backgroundColor} 60%, transparent)`,
+          backgroundColor: `color-mix(in oklab, ${backgroundColor} 35%, transparent)`,
         }}
       />
     </div>
