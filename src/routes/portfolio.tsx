@@ -346,13 +346,15 @@ export default function Portfolio() {
       className={`min-h-screen relative ${textPage}`}
       style={{ fontFamily: "'JetBrains Mono', 'Fira Code', monospace", backgroundColor: bgPage }}
     >
-      <FallingPattern
-        color={isDark ? "rgba(168, 85, 247, 0.95)" : "rgba(124, 58, 237, 0.75)"}
-        backgroundColor={bgPage}
-        duration={90}
-        blurIntensity={isDark ? "0.18em" : "0.12em"}
-        density={1.35}
-      />
+      <div className="fixed inset-0 z-0">
+        <FallingPattern
+          color={isDark ? "rgba(168, 85, 247, 0.95)" : "rgba(124, 58, 237, 0.75)"}
+          backgroundColor={bgPage}
+          duration={90}
+          blurIntensity={isDark ? "0.18em" : "0.12em"}
+          density={1.35}
+        />
+      </div>
 
       {/* Left line */}
       <div className="fixed left-16 top-0 bottom-0 w-px bg-gray-700/30 z-10 hidden md:block" />
