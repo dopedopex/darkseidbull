@@ -389,7 +389,7 @@ export default function Portfolio() {
           <div>
             <div className="flex items-center justify-between mb-1">
               <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-                <span className="text-purple-400">/</span><SpecialText>my-projects</SpecialText></h2>
+                <span className="text-purple-400">/</span><SpecialText><SpecialText>my-projects</SpecialText></SpecialText></h2>
               <a href="https://github.com/0xDarkSeidBull" target="_blank"
                 className="text-gray-600 hover:text-white text-xs flex items-center gap-1 transition-colors">
                 View all --&gt;
@@ -541,7 +541,7 @@ export default function Portfolio() {
         <section id="contact" className="py-20">
           <div>
             <h2 className="text-2xl font-bold text-white flex items-center gap-2 mb-1">
-              <span className="text-purple-400">/</span><SpecialText>contacts</SpecialText></h2>
+              <span className="text-purple-400">/</span><SpecialText><SpecialText>contacts</SpecialText></SpecialText></h2>
             <p className="text-gray-600 text-xs mb-10">Want to reach out?</p>
           </div>
 
