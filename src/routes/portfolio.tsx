@@ -476,8 +476,8 @@ export default function Portfolio() {
                     {p.tags.map(t => <span key={t} className="text-gray-600 text-xs">{t}</span>)}
                   </div>
                   <div className="p-4 flex flex-col flex-1">
-                    <div className="text-xs text-purple-400/60 mb-1">{p.role}</div>
-                    <h3 className="text-white font-semibold text-sm mb-2">{p.title}</h3>
+                    <div className="text-xs text-purple-400/60 mb-1"><SpecialText>{p.role}</SpecialText></div>
+                    <h3 className="text-white font-semibold text-sm mb-2"><SpecialText>{p.title}</SpecialText></h3>
                     <p className="text-gray-600 text-xs leading-relaxed flex-1">{p.desc}</p>
                     <div className="flex gap-2 mt-4">
                       {p.code && (
@@ -566,7 +566,7 @@ export default function Portfolio() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     {skills.map((s, si) => (
                       <div key={s.name} className="flex items-center gap-3">
-                        <span className="text-gray-400 text-xs w-36 shrink-0">{s.name}</span>
+                        <span className="text-gray-400 text-xs w-36 shrink-0"><SpecialText>{s.name}</SpecialText></span>
                         <div className="flex-1 bg-gray-800 rounded-full h-1.5 overflow-hidden">
                           <div
                             className={`h-full rounded-full ${LEVEL_BAR[s.level]} transition-all duration-1000`}
@@ -590,7 +590,7 @@ export default function Portfolio() {
             {FUN_FACTS.map((f, i) => (
               <div>
                 <div className="border border-gray-700/40 px-4 py-2 text-gray-500 text-xs hover:border-purple-500/40 hover:text-gray-300 transition-all flex items-center gap-2">
-                  <span>{f.icon}</span> {f.text}
+                  <span>{f.icon}</span> <SpecialText>{f.text}</SpecialText>
                 </div>
               </div>
             ))}
@@ -653,7 +653,7 @@ export default function Portfolio() {
             ].map((s, i) => (
               <div>
                 <a href={s.href} target="_blank" className="flex items-center gap-3 text-gray-500 hover:text-white text-xs transition-colors py-1">
-                  <span className="text-purple-400">{s.icon}</span> {s.label}
+                  <span className="text-purple-400">{s.icon}</span> <SpecialText>{s.label}</SpecialText>
                 </a>
               </div>
             ))}
