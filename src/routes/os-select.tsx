@@ -374,10 +374,8 @@ function LinuxTerminal() {
 
 // ── Main OsSelect ──────────────────────────────────────────────────────────
 function OsSelect() {
+  const navigate = useNavigate();  // ← yeh add karo
   const [playing, setPlaying] = useState(false);
-  const [showTerminal, setShowTerminal] = useState(false);
-  const [buttonsVisible, setButtonsVisible] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const t = setTimeout(() => setButtonsVisible(true), 2000);
@@ -392,8 +390,6 @@ function OsSelect() {
   };
 
   const handleEnded = () => setPlaying(false);
-
-  if (showTerminal) return <LinuxTerminal />;
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-black relative overflow-hidden">
@@ -438,7 +434,7 @@ function OsSelect() {
         >
           <HoverBorderGradient
             duration={1.2}
-            onClick={() => setShowTerminal(true)}
+            onClick={() => navigate({ to: "/terminal" })}
             style={{ cursor: "pointer" }}
           >
             <span className="flex items-center gap-2.5">
