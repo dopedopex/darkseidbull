@@ -252,7 +252,7 @@ const CLICKABLE_URLS = [
 ];
 
 function renderLine(line: string) {
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const urlRegex = new RegExp("https?://[^\\s]+", "g");
   const parts: React.ReactNode[] = [];
   let lastIndex = 0;
   let match;
