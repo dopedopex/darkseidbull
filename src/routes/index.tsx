@@ -100,8 +100,7 @@ function Index() {
             )}
 
             {/* PILL BUTTONS */}
-            {(
-              <div className="absolute inset-0 z-10">
+            <div className="absolute inset-0 z-10">
                 {/* BLUE PILL */}
                 <button
                   type="button"
@@ -161,13 +160,9 @@ function Index() {
                     Root Access
                   </span>
                 </button>
-              </div>
-            )}
+            </div>
 
-                  <span className="text-red-300 text-sm font-semibold tracking-widest uppercase">Root Access</span>
-                </button>
-              </div>
-            )}
+
 
             <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10" >
               <SpecialText key={textKey} speed={16} className="text-xl md:text-3xl text-white tracking-widest">
