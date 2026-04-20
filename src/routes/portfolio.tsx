@@ -346,7 +346,8 @@ export default function Portfolio() {
       className={`min-h-screen relative ${textPage}`}
       style={{ fontFamily: "'JetBrains Mono', 'Fira Code', monospace", backgroundColor: bgPage }}
     >
-      <div className="fixed inset-0" style={{zIndex: -1}}>
+      <div className="fixed inset-0 z-0" style={{pointerEvents: 'none'}}>
+
         <FallingPattern
           color={isDark ? "rgba(168, 85, 247, 0.95)" : "rgba(124, 58, 237, 0.75)"}
           backgroundColor={bgPage}
@@ -355,7 +356,7 @@ export default function Portfolio() {
           density={1.35}
         />
       </div>
-
+     <div className="relative z-10">
       {/* Left line */}
       <div className="fixed left-16 top-0 bottom-0 w-px bg-gray-700/30 z-10 hidden md:block" />
 
@@ -723,6 +724,7 @@ export default function Portfolio() {
           <div className="text-center text-gray-700 text-xs mt-6">© Copyright 2026, DarkSeidBull</div>
         </footer>
 
+      </div>
       </div>
     </div>
   );
