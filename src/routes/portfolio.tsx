@@ -296,8 +296,29 @@ export default function Portfolio() {
 
   const navLinks = ["home", "works", "about-me", "contact"];
 
+  const [darkMode, setDarkMode] = useState(true);
+
+  useEffect(() => {
+    const cls = document.documentElement.classList;
+    if (darkMode) cls.add("dark");
+    else cls.remove("dark");
+  }, [darkMode]);
+
+  const isDark = darkMode;
+  const bgPage = isDark ? "#1e1e2e" : "#f5f5f7";
+  const textPage = isDark ? "text-gray-300" : "text-gray-700";
+
   return (
-    <div className="min-h-screen bg-[#1e1e2e] text-gray-300" style={{ fontFamily: "'JetBrains Mono', 'Fira Code', monospace" }}>
+    <div
+      className={`min-h-screen relative ${textPage}`}
+      style={{ fontFamily: "'JetBrains Mono', 'Fira Code', monospace", backgroundColor: bgPage }}
+    >
+      <FallingPattern
+        color={isDark ? "#a855f7" : "#7c3aed"}
+        backgroundColor={bgPage}
+        duration={150}
+        blurIntensity="0.5em"
+      />
 
       {/* Left line */}
       <div className="fixed left-16 top-0 bottom-0 w-px bg-gray-700/30 z-10 hidden md:block" />
@@ -312,22 +333,35 @@ export default function Portfolio() {
       </div>
 
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-30 bg-[#1e1e2e]/95 backdrop-blur-md border-b border-gray-700/30">
+      <nav
+        className="fixed top-0 left-0 right-0 z-30 backdrop-blur-md border-b border-gray-700/30"
+        style={{ backgroundColor: isDark ? "rgba(30,30,46,0.85)" : "rgba(245,245,247,0.85)" }}
+      >
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 border border-purple-400 rounded flex items-center justify-center">
               <span className="text-purple-400 text-xs font-bold">D</span>
-            </div><SpecialText loop>DarkSeidBull</SpecialText></div>
+            </div>
+            <span className={isDark ? "text-white" : "text-gray-900"}>
+              <SpecialText loop>DarkSeidBull</SpecialText>
+            </span>
+          </div>
           <div className="hidden md:flex items-center gap-6">
             {navLinks.map(id => (
               <button key={id} onClick={() => scrollTo(id)}
-                className={`text-xs transition-colors hover:text-white flex items-center gap-1 ${activeSection === id ? "text-purple-400" : "text-gray-500"}`}>
+                className={`text-xs transition-colors hover:text-white flex items-center gap-1 relative ${activeSection === id ? "text-purple-400" : isDark ? "text-gray-500" : "text-gray-600"}`}>
                 <span className="text-purple-400">#</span>
-                {id}
-                {activeSection === id && <span className="block h-px w-full bg-purple-400 absolute bottom-0 left-0" />}
+                <SpecialText key={id + activeSection}>{id}</SpecialText>
+                {activeSection === id && <span className="block h-px w-full bg-purple-400 absolute -bottom-1 left-0" />}
               </button>
             ))}
-            <button className="w-7 h-7 rounded-full border border-gray-600 flex items-center justify-center text-gray-500 hover:text-white text-xs transition-colors">☀</button>
+            <button
+              onClick={() => setDarkMode(d => !d)}
+              aria-label="Toggle theme"
+              className="w-7 h-7 rounded-full border border-gray-600 flex items-center justify-center text-gray-500 hover:text-white text-xs transition-colors"
+            >
+              {isDark ? "☀" : "🌙"}
+            </button>
           </div>
           <button className="md:hidden text-gray-400" onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <CloseIcon /> : <MenuIcon />}
@@ -340,6 +374,12 @@ export default function Portfolio() {
                 <span className="text-purple-400"># </span><SpecialText key={id}>{id}</SpecialText>
               </button>
             ))}
+            <button
+              onClick={() => setDarkMode(d => !d)}
+              className="text-left text-gray-400 hover:text-white text-sm"
+            >
+              {isDark ? "☀ Light mode" : "🌙 Dark mode"}
+            </button>
           </div>
         )}
       </nav>
