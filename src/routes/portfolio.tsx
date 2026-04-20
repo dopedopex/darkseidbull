@@ -304,6 +304,18 @@ export default function Portfolio() {
     else cls.remove("dark");
   }, [darkMode]);
 
+  // Inject custom electricity-lightning cursor only on portfolio page
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://cdn.cursors-4u.net/cursors/animated/cur1-11-47e999d7-32.css";
+    link.id = "portfolio-cursor-css";
+    document.head.appendChild(link);
+    return () => {
+      document.getElementById("portfolio-cursor-css")?.remove();
+    };
+  }, []);
+
   const isDark = darkMode;
   const bgPage = isDark ? "#1e1e2e" : "#f5f5f7";
   const textPage = isDark ? "text-gray-300" : "text-gray-700";
