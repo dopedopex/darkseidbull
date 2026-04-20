@@ -393,7 +393,7 @@ export default function Portfolio() {
               </button>
             ))}
             <button
-              onClick={() => setDarkMode(d => !d)}
+              
               aria-label="Toggle theme"
               className="w-7 h-7 rounded-full border border-gray-600 flex items-center justify-center text-gray-500 hover:text-white text-xs transition-colors"
             >
@@ -412,7 +412,7 @@ export default function Portfolio() {
               </button>
             ))}
             <button
-              onClick={() => setDarkMode(d => !d)}
+              
               className="text-left text-gray-400 hover:text-white text-sm"
             >
               {isDark ? "☀ Light mode" : "🌙 Dark mode"}
