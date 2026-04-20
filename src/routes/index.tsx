@@ -77,7 +77,7 @@ function Index() {
             <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60 pointer-events-none" />
 
             {/* DESKTOP CURSOR GLOW */}
-            <>{ hovered && (
+            {hovered && (
               <span
                 className="pointer-events-none fixed z-50 rounded-full"
                 style={{
