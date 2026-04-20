@@ -255,127 +255,12 @@ function renderLine(line: string) {
   return line;
 }
 
-// ── Terminal component ─────────────────────────────────────────────────────
-function LinuxTerminal() {
-  const navigate = useNavigate();
-  const [lines, setLines] = useState<{ text: string; isCommand?: boolean }[]>([
-    { text: "Welcome to DarkSeidBull Terminal v1.0" },
-    { text: 'Type /help to see available commands.' },
-    { text: "" },
-  ]);
-  const [input, setInput] = useState("");
-  const bottomRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [lines]);
-
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
-
-  const handleCommand = (cmd: string) => {
-    const trimmed = cmd.trim().toLowerCase();
-    const newLines: { text: string; isCommand?: boolean }[] = [
-      { text: `root@darkseidbull:~# ${cmd}`, isCommand: true },
-    ];
-
-    if (trimmed === "/help") {
-      HELP_TEXT.split("\n").forEach((l) => newLines.push({ text: l }));
-    } else if (trimmed === "/fullstats") {
-      FULLSTATS_TEXT.split("\n").forEach((l) => newLines.push({ text: l }));
-    } else if (trimmed === "/my-projects") {
-      PROJECTS_TEXT.split("\n").forEach((l) => newLines.push({ text: l }));
-    } else if (trimmed === "/about-me") {
-      ABOUT_TEXT.split("\n").forEach((l) => newLines.push({ text: l }));
-    } else if (trimmed === "/github-contributions") {
-      GITHUB_TEXT.split("\n").forEach((l) => newLines.push({ text: l }));
-    } else if (trimmed === "/skills") {
-      SKILLS_TEXT.split("\n").forEach((l) => newLines.push({ text: l }));
-    } else if (trimmed === "/my-fun-facts") {
-      FUNFACTS_TEXT.split("\n").forEach((l) => newLines.push({ text: l }));
-    } else if (trimmed === "/contacts") {
-      CONTACTS_TEXT.split("\n").forEach((l) => newLines.push({ text: l }));
-    } else if (trimmed === "/all-media") {
-      ALL_MEDIA_TEXT.split("\n").forEach((l) => newLines.push({ text: l }));
-    } else if (trimmed === "/clear") {
-      setLines([{ text: "" }]);
-      setInput("");
-      return;
-    } else if (trimmed === "exit" || trimmed === "/exit") {
-      navigate({ to: "/os-select" });
-      return;
-    } else {
-      newLines.push({ text: `bash: ${cmd}: command not found. Try /help` });
-    }
-
-    newLines.push({ text: "" });
-    setLines((prev) => [...prev, ...newLines]);
-    setInput("");
-  };
-
-  return (
-    <div
-      className="fixed inset-0 bg-black flex flex-col"
-      style={{ fontFamily: "'Courier New', Courier, monospace" }}
-      onClick={() => inputRef.current?.focus()}
-    >
-      {/* Terminal header bar */}
-      <div className="flex items-center gap-2 px-4 py-2 bg-[#1a1a1a] border-b border-green-900/40 shrink-0">
-        <div className="w-3 h-3 rounded-full bg-red-500/80" />
-        <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-        <div className="w-3 h-3 rounded-full bg-green-500/80" />
-        <span className="ml-3 text-green-500/60 text-xs">
-          root@darkseidbull: ~
-        </span>
-        <button
-          onClick={(e) => { e.stopPropagation(); navigate({ to: "/os-select" }); }}
-          className="ml-auto text-green-700 hover:text-green-400 text-xs transition-colors"
-        >
-          [exit]
-        </button>
-      </div>
-
-      {/* Output area */}
-      <div className="flex-1 overflow-y-auto p-4 text-green-400 text-sm leading-relaxed">
-        {lines.map((line, i) => (
-          <div
-            key={i}
-            className={`whitespace-pre-wrap ${line.isCommand ? "text-green-300 font-bold" : "text-green-400"}`}
-          >
-            {renderLine(line.text)}
-          </div>
-        ))}
-        <div ref={bottomRef} />
-      </div>
-
-      {/* Input row */}
-      <div className="shrink-0 flex items-center gap-2 px-4 py-3 border-t border-green-900/40 bg-[#0a0a0a]">
-        <span className="text-green-500 text-sm font-bold whitespace-nowrap">
-          root@darkseidbull:~#
-        </span>
-        <input
-          ref={inputRef}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && input.trim()) handleCommand(input);
-          }}
-          className="flex-1 bg-transparent text-green-400 text-sm outline-none caret-green-400"
-          placeholder="type /help..."
-          autoComplete="off"
-          spellCheck={false}
-        />
-      </div>
-    </div>
-  );
-}
-
 // ── Main OsSelect ──────────────────────────────────────────────────────────
 function OsSelect() {
-  const navigate = useNavigate();  // ← yeh add karo
+  const navigate = useNavigate();
   const [playing, setPlaying] = useState(false);
+  const [buttonsVisible, setButtonsVisible] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const t = setTimeout(() => setButtonsVisible(true), 2000);
@@ -398,7 +283,6 @@ function OsSelect() {
       </div>
 
       <div className="flex items-center gap-6 relative z-10">
-        {/* Windows */}
         <div
           className="transition-all ease-out"
           style={{
@@ -422,7 +306,6 @@ function OsSelect() {
           </HoverBorderGradient>
         </div>
 
-        {/* Linux */}
         <div
           className="transition-all ease-out"
           style={{
