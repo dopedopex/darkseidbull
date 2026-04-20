@@ -77,7 +77,7 @@ function Index() {
             <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60 pointer-events-none" />
 
             {/* DESKTOP CURSOR GLOW */}
-            {!isMobile && hovered && (
+            <>{ hovered && (
               <span
                 className="pointer-events-none fixed z-50 rounded-full"
                 style={{
@@ -99,8 +99,8 @@ function Index() {
               />
             )}
 
-            {/* DESKTOP INVISIBLE BUTTONS OVER PILLS */}
-            {!isMobile && (
+            {/* PILL BUTTONS */}
+            {(
               <div className="absolute inset-0 z-10">
                 {/* BLUE PILL */}
                 <button
@@ -164,34 +164,12 @@ function Index() {
               </div>
             )}
 
-            {/* MOBILE TAP BUTTONS */}
-            {isMobile && (
-              <div className="absolute bottom-20 left-0 right-0 z-20 flex justify-center gap-6 px-8">
-                {/* BLUE */}
-                <button
-                  type="button"
-                  onClick={() => setScreen("loading-blue")}
-                  className="flex-1 flex flex-col items-center gap-2 py-4 rounded-2xl backdrop-blur-md border border-blue-400/40 bg-blue-500/20 active:bg-blue-500/40 transition-all"
-                  style={{ boxShadow: "0 0 20px 4px rgba(59,130,246,0.3)" }}
-                >
-                  <span className="w-10 h-4 rounded-full bg-blue-400" style={{ boxShadow: "0 0 12px 4px rgba(59,130,246,0.8)" }} />
-                  <span className="text-blue-300 text-sm font-semibold tracking-widest uppercase">User Mode</span>
-                </button>
-
-                {/* RED */}
-                <button
-                  type="button"
-                  onClick={() => setScreen("loading-red")}
-                  className="flex-1 flex flex-col items-center gap-2 py-4 rounded-2xl backdrop-blur-md border border-red-400/40 bg-red-500/20 active:bg-red-500/40 transition-all"
-                  style={{ boxShadow: "0 0 20px 4px rgba(239,68,68,0.3)" }}
-                >
-                  <span className="w-10 h-4 rounded-full bg-red-400" style={{ boxShadow: "0 0 12px 4px rgba(239,68,68,0.8)" }} />
                   <span className="text-red-300 text-sm font-semibold tracking-widest uppercase">Root Access</span>
                 </button>
               </div>
             )}
 
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10" style={isMobile ? {bottom: '5.5rem'} : {}}>
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10" >
               <SpecialText key={textKey} speed={16} className="text-xl md:text-3xl text-white tracking-widest">
                 Choose your pill
               </SpecialText>
