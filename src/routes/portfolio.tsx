@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import React, { useState, useEffect } from "react";
-import { FallingPattern } from "@/components/ui/falling-pattern";
+import { MatrixRain } from "@/components/ui/matrix-rain";
 
 interface SpecialTextProps {
   children: string;
@@ -253,21 +253,42 @@ function SectionTitle({ title, slash = false }: { title: string; slash?: boolean
   );
 }
 
-// ── GitHub Contribution Graph (SVG visual) ────────────────────────────────
+// ── GitHub Contribution Graph (REAL data via ghchart.rshah.org) ──────────
 function ContributionGraph() {
-  const colors = ["#1e1e2e", "#1a3a1a", "#2d6a2d", "#3cb33c", "#57e557"];
-  const fixed = [[0,1,0,2,1,0,3],[1,0,2,1,0,1,2],[0,2,1,3,2,1,0],[1,1,0,2,1,2,1],[0,3,2,1,0,1,2],[2,1,0,1,2,0,1],[1,0,1,2,1,3,0],[0,1,2,0,1,1,2],[3,2,1,0,1,2,1],[1,0,2,1,3,1,0],[0,1,1,2,1,0,2],[2,1,0,1,2,1,3],[1,2,1,0,1,2,1],[0,1,3,2,1,0,1],[1,0,1,1,2,1,0],[2,1,2,0,1,2,1],[1,3,1,2,0,1,2],[0,1,2,1,3,2,1],[1,0,1,2,1,1,0],[2,1,0,1,2,3,1],[1,2,1,3,1,0,2],[0,1,2,1,0,2,1],[3,1,1,2,1,0,1],[1,2,3,1,2,1,0],[2,1,0,2,1,3,2],[1,3,2,1,0,1,2],[0,2,1,2,3,1,1],[2,1,3,1,2,0,1],[1,0,2,3,1,2,1],[3,2,1,0,2,1,3],[2,3,1,2,1,0,2],[1,2,3,2,1,2,1],[3,1,2,1,3,2,0],[2,3,2,1,2,3,2],[1,2,3,2,1,2,3],[3,2,1,3,2,1,2],[2,1,3,2,3,1,2],[3,2,2,3,1,2,3],[2,3,1,2,3,2,1],[1,2,3,3,2,1,3],[3,2,3,1,2,3,2],[2,3,2,3,1,2,3],[3,1,2,3,2,3,1],[2,3,3,2,3,1,2],[3,2,1,3,2,3,2],[2,3,2,1,3,2,3],[3,2,3,2,1,3,2],[4,3,2,3,2,1,3],[3,4,3,2,3,2,4],[2,3,4,3,2,3,3],[4,3,3,4,3,2,3],[3,4,2,3,4,3,4]];
-  const months = ["Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan","Feb","Mar","Apr"];
+  const username = "0xDarkSeidBull";
   return (
     <div className="bg-[#161622] border border-gray-700/40 rounded p-4">
-      <div className="text-xs text-gray-400 mb-3 font-semibold">530 contributions in the last year</div>
-      <svg viewBox="0 0 676 111" className="w-full">
-        {months.map((m, i) => <text key={m} x={i * 52} y="10" fontSize="8" fill="#6b7280">{m}</text>)}
-        {fixed.map((week, w) => week.map((val, d) => <rect key={`${w}-${d}`} x={w * 13} y={d * 13 + 14} width="10" height="10" rx="2" fill={colors[val]} />))}
-      </svg>
-      <div className="flex items-center gap-2 mt-2 justify-end">
+      <div className="flex items-center justify-between mb-3">
+        <div className="text-xs text-gray-400 font-semibold">
+          Live GitHub contributions — @{username}
+        </div>
+        <a
+          href={`https://github.com/${username}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs text-purple-400 hover:text-purple-300 transition-colors"
+        >
+          View profile →
+        </a>
+      </div>
+      <a
+        href={`https://github.com/${username}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block"
+      >
+        <img
+          src={`https://ghchart.rshah.org/a855f7/${username}`}
+          alt={`${username}'s real GitHub contribution graph for the last year`}
+          className="w-full h-auto"
+          loading="lazy"
+        />
+      </a>
+      <div className="flex items-center gap-2 mt-3 justify-end">
         <span className="text-xs text-gray-600">Less</span>
-        {colors.map((c, i) => <span key={i} style={{display:"inline-block",width:10,height:10,backgroundColor:c,borderRadius:2}} />)}
+        {["#1e1e2e", "#3b1d5c", "#6b2dab", "#9333ea", "#c084fc"].map((c, i) => (
+          <span key={i} style={{ display: "inline-block", width: 10, height: 10, backgroundColor: c, borderRadius: 2 }} />
+        ))}
         <span className="text-xs text-gray-600">More</span>
       </div>
     </div>
@@ -325,11 +346,12 @@ export default function Portfolio() {
       className={`min-h-screen relative ${textPage}`}
       style={{ fontFamily: "'JetBrains Mono', 'Fira Code', monospace", backgroundColor: bgPage }}
     >
-      <FallingPattern
+      <MatrixRain
         color={isDark ? "#a855f7" : "#7c3aed"}
-        backgroundColor={bgPage}
-        duration={150}
-        blurIntensity="0.5em"
+        backgroundColor={isDark ? "#0a0a12" : "#f5f5f7"}
+        fontSize={16}
+        fadeOpacity={isDark ? 0.06 : 0.12}
+        speed={33}
       />
 
       {/* Left line */}
