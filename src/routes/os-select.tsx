@@ -252,29 +252,7 @@ const CLICKABLE_URLS = [
 ];
 
 function renderLine(line: string) {
-  const urlRegex = new RegExp("https?://[^\\s]+", "g");
-  const parts: React.ReactNode[] = [];
-  let lastIndex = 0;
-  let match;
-
-  while ((match = urlRegex.exec(line)) !== null) {
-    if (match.index > lastIndex) {
-      parts.push(<span key={lastIndex}>{line.slice(lastIndex, match.index)}</span>);
-    }
-    const url = match[0];
-    parts.push(
-      <a key={match.index} href={url} target="_blank" rel="noopener noreferrer" className="text-green-300 underline hover:text-white transition-colors">
-        {url}
-      </a>
-    );
-    lastIndex = match.index + url.length;
-  }
-
-  if (lastIndex < line.length) {
-    parts.push(<span key={lastIndex}>{line.slice(lastIndex)}</span>);
-  }
-
-  return parts.length > 0 ? parts : line;
+  return line;
 }
 
 // ── Terminal component ─────────────────────────────────────────────────────
