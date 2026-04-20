@@ -553,17 +553,7 @@ export default function Portfolio() {
                     </a>
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <div className="grid grid-cols-2 gap-2">
-                    <input placeholder="Name" autoComplete="off" className="bg-transparent border border-gray-700/40 px-3 py-2 text-xs text-gray-300 placeholder-gray-700 focus:outline-none focus:border-purple-500/50 w-full" />
-                    <input placeholder="Email" autoComplete="off" className="bg-transparent border border-gray-700/40 px-3 py-2 text-xs text-gray-300 placeholder-gray-700 focus:outline-none focus:border-purple-500/50 w-full" />
-                  </div>
-                  <input placeholder="Subject" autoComplete="off" className="bg-transparent border border-gray-700/40 px-3 py-2 text-xs text-gray-300 placeholder-gray-700 focus:outline-none focus:border-purple-500/50 w-full" />
-                  <textarea placeholder="Message" rows={4} className="bg-transparent border border-gray-700/40 px-3 py-2 text-xs text-gray-300 placeholder-gray-700 focus:outline-none focus:border-purple-500/50 w-full resize-none" />
-                  <button className="px-5 py-2 border border-purple-500/40 text-purple-400 hover:bg-purple-500/10 text-xs flex items-center gap-2 transition-colors">
-                    Send <SendIcon />
-                  </button>
-                </div>
+                
               </div>
             </div>
           </div>
