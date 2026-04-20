@@ -69,7 +69,7 @@ function Index() {
               alt="Choose your path"
               className="absolute inset-0 w-full h-full select-none pointer-events-none"
               style={{
-                objectFit: "cover",
+                objectFit: isMobile ? "contain" : "cover",
                 objectPosition: isMobile ? "40% center" : "center center",
               }}
               draggable={false}
