@@ -37,7 +37,7 @@ function Index() {
       return () => clearTimeout(t);
     }
     if (screen === "loading-blue") {
-      const t = setTimeout(() => navigate({ to: "/portfolio" }), 3000);
+      const t = setTimeout(() => navigate({ to: "/mode-select" }), 3000);
       return () => clearTimeout(t);
     }
   }, [screen]);
