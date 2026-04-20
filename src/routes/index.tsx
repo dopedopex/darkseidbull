@@ -111,7 +111,7 @@ function Index() {
                   className="absolute rounded-full"
                   style={{
                     left: "29%",
-                    top: "64.4%",
+                    top: isMobile ? "58%" : "64.4%",
                     width: isMobile ? "18%" : "5%",
             height: isMobile ? "12%" : "6%",
             transform: "translate(-50%, -50%)",
@@ -140,15 +140,15 @@ function Index() {
                   aria-label="Root Access"
                   className="absolute rounded-full"
                   style={{
-                    left: "68.5%",
-                    top: "64.4%",
-                    width: isMobile ? "18%" : "5%",
-                    height: isMobile ? "12%" : "6%",
-                    transform: "translate(-50%, -50%)",
-                    cursor: isMobile ? "pointer" : "none",
-                    background: "transparent",
-                    border: "none",
-                  }}
+  left: "68.5%",
+  top: isMobile ? "58%" : "64.4%",
+  width: isMobile ? "18%" : "5%",
+  height: isMobile ? "12%" : "6%",
+  transform: "translate(-50%, -50%)",
+  cursor: isMobile ? "pointer" : "none",
+  background: "transparent",
+  border: "none",
+}}
                 >
                   <span
                     className={`absolute left-1/2 -translate-x-1/2 -top-10 px-4 py-2 rounded-full bg-red-500/90 text-white text-xs md:text-sm font-medium whitespace-nowrap backdrop-blur-md border border-red-300/40 shadow-lg shadow-red-500/40 transition-all duration-300 ${
