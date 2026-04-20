@@ -1,36 +1,56 @@
 import { createFileRoute } from "@tanstack/react-router";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import { FallingPattern } from "@/components/ui/falling-pattern";
 
+interface SpecialTextProps {
+  children: string;
+  loop?: boolean;
+  className?: string;
+}
 
-function SpecialText({ children, loop = false, className = '' }) {
+function SpecialText({ children, loop = false, className = "" }: SpecialTextProps) {
   const text = children;
-  const [display, setDisplay] = React.useState(text);
+  const [display, setDisplay] = React.useState<string>(text);
   const [key, setKey] = React.useState(0);
-  const CHARS = '_!X$0-+*#';
+  const CHARS = "_!X$0-+*#";
   React.useEffect(() => {
-    let step = 0; let phase = 'p1';
-    const max1 = text.length * 2; const max2 = text.length * 2;
+    let step = 0;
+    let phase: "p1" | "p2" = "p1";
+    const max1 = text.length * 2;
+    const max2 = text.length * 2;
     const iv = setInterval(() => {
-      if (phase === 'p1') {
-        const len = Math.min(step+1, text.length);
-        let r = '';
-        for(let i=0;i<len;i++) r+=CHARS[Math.floor(Math.random()*CHARS.length)];
-        for(let i=len;i<text.length;i++) r+=' ';
-        setDisplay(r); step++;
-        if(step>=max1){phase='p2';step=0;}
+      if (phase === "p1") {
+        const len = Math.min(step + 1, text.length);
+        let r = "";
+        for (let i = 0; i < len; i++) r += CHARS[Math.floor(Math.random() * CHARS.length)];
+        for (let i = len; i < text.length; i++) r += "\u00A0";
+        setDisplay(r);
+        step++;
+        if (step >= max1) {
+          phase = "p2";
+          step = 0;
+        }
       } else {
-        const rev=Math.floor(step/2); let r='';
-        for(let i=0;i<rev&&i<text.length;i++) r+=text[i];
-        if(rev<text.length) r+=step%2===0?'_':CHARS[Math.floor(Math.random()*CHARS.length)];
-        while(r.length<text.length) r+=CHARS[Math.floor(Math.random()*CHARS.length)];
-        setDisplay(r); step++;
-        if(step>=max2){ setDisplay(text); clearInterval(iv); if(loop) setTimeout(()=>setKey(k=>k+1),3000); }
+        const rev = Math.floor(step / 2);
+        let r = "";
+        for (let i = 0; i < rev && i < text.length; i++) r += text[i];
+        if (rev < text.length)
+          r += step % 2 === 0 ? "_" : CHARS[Math.floor(Math.random() * CHARS.length)];
+        while (r.length < text.length) r += CHARS[Math.floor(Math.random() * CHARS.length)];
+        setDisplay(r);
+        step++;
+        if (step >= max2) {
+          setDisplay(text);
+          clearInterval(iv);
+          if (loop) setTimeout(() => setKey((k) => k + 1), 3000);
+        }
       }
     }, 18);
-    return ()=>clearInterval(iv);
-  }, [key]);
-  return <span className={'font-mono '+className}>{display}</span>;
+    return () => clearInterval(iv);
+  }, [key, text, loop]);
+  return <span className={"font-mono " + className}>{display}</span>;
 }
+
 export const Route = createFileRoute("/portfolio")({
   component: Portfolio,
 });
