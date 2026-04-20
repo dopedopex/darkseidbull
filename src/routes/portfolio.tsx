@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import React, { useState, useEffect } from "react";
-import { MatrixRain } from "@/components/ui/matrix-rain";
+import { FallingPattern } from "@/components/ui/falling-pattern";
 
 interface SpecialTextProps {
   children: string;
@@ -338,7 +338,7 @@ export default function Portfolio() {
   }, []);
 
   const isDark = darkMode;
-  const bgPage = isDark ? "#1e1e2e" : "#f5f5f7";
+  const bgPage = isDark ? "#0a0a12" : "#f5f5f7";
   const textPage = isDark ? "text-gray-300" : "text-gray-700";
 
   return (
@@ -346,12 +346,12 @@ export default function Portfolio() {
       className={`min-h-screen relative ${textPage}`}
       style={{ fontFamily: "'JetBrains Mono', 'Fira Code', monospace", backgroundColor: bgPage }}
     >
-      <MatrixRain
-        color={isDark ? "#a855f7" : "#7c3aed"}
-        backgroundColor={isDark ? "#0a0a12" : "#f5f5f7"}
-        fontSize={16}
-        fadeOpacity={isDark ? 0.06 : 0.12}
-        speed={33}
+      <FallingPattern
+        color={isDark ? "rgba(168, 85, 247, 0.95)" : "rgba(124, 58, 237, 0.75)"}
+        backgroundColor={bgPage}
+        duration={90}
+        blurIntensity={isDark ? "0.18em" : "0.12em"}
+        density={1.35}
       />
 
       {/* Left line */}
