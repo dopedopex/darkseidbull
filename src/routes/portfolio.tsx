@@ -317,7 +317,7 @@ export default function Portfolio() {
           <div className="md:hidden px-6 pb-4 border-t border-gray-700/30 pt-3 flex flex-col gap-3">
             {navLinks.map(id => (
               <button key={id} onClick={() => scrollTo(id)} className="text-left text-gray-400 hover:text-white text-sm">
-                <span className="text-purple-400"># </span>{id}
+                <span className="text-purple-400"># </span><SpecialText key={id}>{id}</SpecialText>
               </button>
             ))}
           </div>
