@@ -1,6 +1,36 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
+
+function SpecialText({ children, loop = false, className = '' }) {
+  const text = children;
+  const [display, setDisplay] = React.useState(text);
+  const [key, setKey] = React.useState(0);
+  const CHARS = '_!X$0-+*#';
+  React.useEffect(() => {
+    let step = 0; let phase = 'p1';
+    const max1 = text.length * 2; const max2 = text.length * 2;
+    const iv = setInterval(() => {
+      if (phase === 'p1') {
+        const len = Math.min(step+1, text.length);
+        let r = '';
+        for(let i=0;i<len;i++) r+=CHARS[Math.floor(Math.random()*CHARS.length)];
+        for(let i=len;i<text.length;i++) r+=' ';
+        setDisplay(r); step++;
+        if(step>=max1){phase='p2';step=0;}
+      } else {
+        const rev=Math.floor(step/2); let r='';
+        for(let i=0;i<rev&&i<text.length;i++) r+=text[i];
+        if(rev<text.length) r+=step%2===0?'_':CHARS[Math.floor(Math.random()*CHARS.length)];
+        while(r.length<text.length) r+=CHARS[Math.floor(Math.random()*CHARS.length)];
+        setDisplay(r); step++;
+        if(step>=max2){ setDisplay(text); clearInterval(iv); if(loop) setTimeout(()=>setKey(k=>k+1),3000); }
+      }
+    }, 18);
+    return ()=>clearInterval(iv);
+  }, [key]);
+  return <span className={'font-mono '+className}>{display}</span>;
+}
 export const Route = createFileRoute("/portfolio")({
   component: Portfolio,
 });
@@ -267,9 +297,7 @@ export default function Portfolio() {
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 border border-purple-400 rounded flex items-center justify-center">
               <span className="text-purple-400 text-xs font-bold">D</span>
-            </div>
-            DarkSeidBull
-          </div>
+            </div><SpecialText loop>DarkSeidBull</SpecialText></div>
           <div className="hidden md:flex items-center gap-6">
             {navLinks.map(id => (
               <button key={id} onClick={() => scrollTo(id)}
@@ -304,9 +332,7 @@ export default function Portfolio() {
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight mb-4">
-                DarkSeidBull
-                <span className="block text-xl md:text-2xl mt-2 text-gray-300 font-normal">
+              <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight mb-4"><SpecialText loop>DarkSeidBull</SpecialText><span className="block text-xl md:text-2xl mt-2 text-gray-300 font-normal">
                   is a <span className="text-purple-400">Web3 Infrastructure</span> builder<br />
                   and <span className="text-purple-400">Node Operator</span>
                 </span>
@@ -363,9 +389,7 @@ export default function Portfolio() {
           <div>
             <div className="flex items-center justify-between mb-1">
               <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-                <span className="text-purple-400">/</span>
-                my-projects
-              </h2>
+                <span className="text-purple-400">/</span><SpecialText>my-projects</SpecialText></h2>
               <a href="https://github.com/0xDarkSeidBull" target="_blank"
                 className="text-gray-600 hover:text-white text-xs flex items-center gap-1 transition-colors">
                 View all --&gt;
@@ -418,9 +442,7 @@ export default function Portfolio() {
         <section id="about-me" className="py-20">
           <div>
             <h2 className="text-2xl font-bold text-white flex items-center gap-2 mb-1">
-              <span className="text-purple-400">/</span>
-              about-me
-            </h2>
+              <span className="text-purple-400">/</span><SpecialText>about-me</SpecialText></h2>
             <p className="text-gray-600 text-xs mb-10">Who am I?</p>
           </div>
 
@@ -519,9 +541,7 @@ export default function Portfolio() {
         <section id="contact" className="py-20">
           <div>
             <h2 className="text-2xl font-bold text-white flex items-center gap-2 mb-1">
-              <span className="text-purple-400">/</span>
-              contacts
-            </h2>
+              <span className="text-purple-400">/</span><SpecialText>contacts</SpecialText></h2>
             <p className="text-gray-600 text-xs mb-10">Want to reach out?</p>
           </div>
 
@@ -588,7 +608,7 @@ export default function Portfolio() {
                 <div className="w-5 h-5 border border-purple-400 rounded flex items-center justify-center">
                   <span className="text-purple-400 text-xs">D</span>
                 </div>
-                <span className="text-white text-xs font-semibold">DarkSeidBull</span>
+                <span className="text-white text-xs font-semibold"><SpecialText loop>DarkSeidBull</SpecialText></span>
                 <span className="text-gray-700 text-xs">0xdarkseidbull@gmail.com</span>
               </div>
               <p className="text-gray-700 text-xs">Web3 Infrastructure Builder & Node Operator</p>
