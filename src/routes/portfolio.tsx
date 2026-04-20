@@ -278,39 +278,19 @@ function SectionTitle({ title, slash = false }: { title: string; slash?: boolean
 
 // ── GitHub Contribution Graph (SVG visual) ────────────────────────────────
 function ContributionGraph() {
-  const weeks = 52;
-  const days = 7;
-  const data = Array.from({ length: weeks }, (_, w) =>
-    Array.from({ length: days }, (_, d) => {
-      const density = w > 30 ? 0.7 : w > 20 ? 0.5 : w > 10 ? 0.4 : 0.2;
-      const v = Math.random();
-      if (v < 1 - density) return 0;
-      if (v < 1 - density + 0.15) return 1;
-      if (v < 1 - density + 0.25) return 2;
-      if (v < 1 - density + 0.35) return 3;
-      return 4;
-    })
-  );
   const colors = ["#1e1e2e", "#1a3a1a", "#2d6a2d", "#3cb33c", "#57e557"];
-  const months = ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr"];
-
+  const fixed = [[0,1,0,2,1,0,3],[1,0,2,1,0,1,2],[0,2,1,3,2,1,0],[1,1,0,2,1,2,1],[0,3,2,1,0,1,2],[2,1,0,1,2,0,1],[1,0,1,2,1,3,0],[0,1,2,0,1,1,2],[3,2,1,0,1,2,1],[1,0,2,1,3,1,0],[0,1,1,2,1,0,2],[2,1,0,1,2,1,3],[1,2,1,0,1,2,1],[0,1,3,2,1,0,1],[1,0,1,1,2,1,0],[2,1,2,0,1,2,1],[1,3,1,2,0,1,2],[0,1,2,1,3,2,1],[1,0,1,2,1,1,0],[2,1,0,1,2,3,1],[1,2,1,3,1,0,2],[0,1,2,1,0,2,1],[3,1,1,2,1,0,1],[1,2,3,1,2,1,0],[2,1,0,2,1,3,2],[1,3,2,1,0,1,2],[0,2,1,2,3,1,1],[2,1,3,1,2,0,1],[1,0,2,3,1,2,1],[3,2,1,0,2,1,3],[2,3,1,2,1,0,2],[1,2,3,2,1,2,1],[3,1,2,1,3,2,0],[2,3,2,1,2,3,2],[1,2,3,2,1,2,3],[3,2,1,3,2,1,2],[2,1,3,2,3,1,2],[3,2,2,3,1,2,3],[2,3,1,2,3,2,1],[1,2,3,3,2,1,3],[3,2,3,1,2,3,2],[2,3,2,3,1,2,3],[3,1,2,3,2,3,1],[2,3,3,2,3,1,2],[3,2,1,3,2,3,2],[2,3,2,1,3,2,3],[3,2,3,2,1,3,2],[4,3,2,3,2,1,3],[3,4,3,2,3,2,4],[2,3,4,3,2,3,3],[4,3,3,4,3,2,3],[3,4,2,3,4,3,4]];
+  const months = ["Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan","Feb","Mar","Apr"];
   return (
     <div className="bg-[#161622] border border-gray-700/40 rounded p-4">
       <div className="text-xs text-gray-400 mb-3 font-semibold">530 contributions in the last year</div>
-      <svg viewBox={`0 0 ${weeks * 13} ${days * 13 + 20}`} className="w-full">
-        {months.map((m, i) => (
-          <text key={m} x={i * (weeks * 13 / 13)} y="10" fontSize="8" fill="#6b7280">{m}</text>
-        ))}
-        {data.map((week, w) =>
-          week.map((val, d) => (
-            <rect key={`${w}-${d}`} x={w * 13} y={d * 13 + 14} width="10" height="10" rx="2"
-              fill={colors[val]} />
-          ))
-        )}
+      <svg viewBox="0 0 676 111" className="w-full">
+        {months.map((m, i) => <text key={m} x={i * 52} y="10" fontSize="8" fill="#6b7280">{m}</text>)}
+        {fixed.map((week, w) => week.map((val, d) => <rect key={} x={w * 13} y={d * 13 + 14} width="10" height="10" rx="2" fill={colors[val]} />))}
       </svg>
       <div className="flex items-center gap-2 mt-2 justify-end">
         <span className="text-xs text-gray-600">Less</span>
-        {colors.map((c, i) => <rect key={i} width="10" height="10" fill={c} rx="2" className="inline-block" style={{ display: "inline-block", width: 10, height: 10, backgroundColor: c, borderRadius: 2 }} />)}
+        {colors.map((c, i) => <span key={i} style={{display:"inline-block",width:10,height:10,backgroundColor:c,borderRadius:2}} />)}
         <span className="text-xs text-gray-600">More</span>
       </div>
     </div>
