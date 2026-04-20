@@ -1,37 +1,56 @@
 import { createFileRoute } from "@tanstack/react-router";
+import React, { useState, useEffect } from "react";
 import { FallingPattern } from "@/components/ui/falling-pattern";
-import React, { useState, useEffect, useRef } from "react";
 
+interface SpecialTextProps {
+  children: string;
+  loop?: boolean;
+  className?: string;
+}
 
-function SpecialText({ children, loop = false, className = '' }) {
+function SpecialText({ children, loop = false, className = "" }: SpecialTextProps) {
   const text = children;
-  const [display, setDisplay] = React.useState(text);
+  const [display, setDisplay] = React.useState<string>(text);
   const [key, setKey] = React.useState(0);
-  const CHARS = '_!X$0-+*#';
+  const CHARS = "_!X$0-+*#";
   React.useEffect(() => {
-    let step = 0; let phase = 'p1';
-    const max1 = text.length * 2; const max2 = text.length * 2;
+    let step = 0;
+    let phase: "p1" | "p2" = "p1";
+    const max1 = text.length * 2;
+    const max2 = text.length * 2;
     const iv = setInterval(() => {
-      if (phase === 'p1') {
-        const len = Math.min(step+1, text.length);
-        let r = '';
-        for(let i=0;i<len;i++) r+=CHARS[Math.floor(Math.random()*CHARS.length)];
-        for(let i=len;i<text.length;i++) r+=' ';
-        setDisplay(r); step++;
-        if(step>=max1){phase='p2';step=0;}
+      if (phase === "p1") {
+        const len = Math.min(step + 1, text.length);
+        let r = "";
+        for (let i = 0; i < len; i++) r += CHARS[Math.floor(Math.random() * CHARS.length)];
+        for (let i = len; i < text.length; i++) r += "\u00A0";
+        setDisplay(r);
+        step++;
+        if (step >= max1) {
+          phase = "p2";
+          step = 0;
+        }
       } else {
-        const rev=Math.floor(step/2); let r='';
-        for(let i=0;i<rev&&i<text.length;i++) r+=text[i];
-        if(rev<text.length) r+=step%2===0?'_':CHARS[Math.floor(Math.random()*CHARS.length)];
-        while(r.length<text.length) r+=CHARS[Math.floor(Math.random()*CHARS.length)];
-        setDisplay(r); step++;
-        if(step>=max2){ setDisplay(text); clearInterval(iv); if(loop) setTimeout(()=>setKey(k=>k+1),3000); }
+        const rev = Math.floor(step / 2);
+        let r = "";
+        for (let i = 0; i < rev && i < text.length; i++) r += text[i];
+        if (rev < text.length)
+          r += step % 2 === 0 ? "_" : CHARS[Math.floor(Math.random() * CHARS.length)];
+        while (r.length < text.length) r += CHARS[Math.floor(Math.random() * CHARS.length)];
+        setDisplay(r);
+        step++;
+        if (step >= max2) {
+          setDisplay(text);
+          clearInterval(iv);
+          if (loop) setTimeout(() => setKey((k) => k + 1), 3000);
+        }
       }
     }, 18);
-    return ()=>clearInterval(iv);
-  }, [key]);
-  return <span className={'font-mono '+className}>{display}</span>;
+    return () => clearInterval(iv);
+  }, [key, text, loop]);
+  return <span className={"font-mono " + className}>{display}</span>;
 }
+
 export const Route = createFileRoute("/portfolio")({
   component: Portfolio,
 });
@@ -234,21 +253,42 @@ function SectionTitle({ title, slash = false }: { title: string; slash?: boolean
   );
 }
 
-// ── GitHub Contribution Graph (SVG visual) ────────────────────────────────
+// ── GitHub Contribution Graph (REAL data via ghchart.rshah.org) ──────────
 function ContributionGraph() {
-  const colors = ["#1e1e2e", "#1a3a1a", "#2d6a2d", "#3cb33c", "#57e557"];
-  const fixed = [[0,1,0,2,1,0,3],[1,0,2,1,0,1,2],[0,2,1,3,2,1,0],[1,1,0,2,1,2,1],[0,3,2,1,0,1,2],[2,1,0,1,2,0,1],[1,0,1,2,1,3,0],[0,1,2,0,1,1,2],[3,2,1,0,1,2,1],[1,0,2,1,3,1,0],[0,1,1,2,1,0,2],[2,1,0,1,2,1,3],[1,2,1,0,1,2,1],[0,1,3,2,1,0,1],[1,0,1,1,2,1,0],[2,1,2,0,1,2,1],[1,3,1,2,0,1,2],[0,1,2,1,3,2,1],[1,0,1,2,1,1,0],[2,1,0,1,2,3,1],[1,2,1,3,1,0,2],[0,1,2,1,0,2,1],[3,1,1,2,1,0,1],[1,2,3,1,2,1,0],[2,1,0,2,1,3,2],[1,3,2,1,0,1,2],[0,2,1,2,3,1,1],[2,1,3,1,2,0,1],[1,0,2,3,1,2,1],[3,2,1,0,2,1,3],[2,3,1,2,1,0,2],[1,2,3,2,1,2,1],[3,1,2,1,3,2,0],[2,3,2,1,2,3,2],[1,2,3,2,1,2,3],[3,2,1,3,2,1,2],[2,1,3,2,3,1,2],[3,2,2,3,1,2,3],[2,3,1,2,3,2,1],[1,2,3,3,2,1,3],[3,2,3,1,2,3,2],[2,3,2,3,1,2,3],[3,1,2,3,2,3,1],[2,3,3,2,3,1,2],[3,2,1,3,2,3,2],[2,3,2,1,3,2,3],[3,2,3,2,1,3,2],[4,3,2,3,2,1,3],[3,4,3,2,3,2,4],[2,3,4,3,2,3,3],[4,3,3,4,3,2,3],[3,4,2,3,4,3,4]];
-  const months = ["Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan","Feb","Mar","Apr"];
+  const username = "0xDarkSeidBull";
   return (
     <div className="bg-[#161622] border border-gray-700/40 rounded p-4">
-      <div className="text-xs text-gray-400 mb-3 font-semibold">530 contributions in the last year</div>
-      <svg viewBox="0 0 676 111" className="w-full">
-        {months.map((m, i) => <text key={m} x={i * 52} y="10" fontSize="8" fill="#6b7280">{m}</text>)}
-        {fixed.map((week, w) => week.map((val, d) => <rect key={`${w}-${d}`} x={w * 13} y={d * 13 + 14} width="10" height="10" rx="2" fill={colors[val]} />))}
-      </svg>
-      <div className="flex items-center gap-2 mt-2 justify-end">
+      <div className="flex items-center justify-between mb-3">
+        <div className="text-xs text-gray-400 font-semibold">
+          Live GitHub contributions — @{username}
+        </div>
+        <a
+          href={`https://github.com/${username}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs text-purple-400 hover:text-purple-300 transition-colors"
+        >
+          View profile →
+        </a>
+      </div>
+      <a
+        href={`https://github.com/${username}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block"
+      >
+        <img
+          src={`https://ghchart.rshah.org/a855f7/${username}`}
+          alt={`${username}'s real GitHub contribution graph for the last year`}
+          className="w-full h-auto"
+          loading="lazy"
+        />
+      </a>
+      <div className="flex items-center gap-2 mt-3 justify-end">
         <span className="text-xs text-gray-600">Less</span>
-        {colors.map((c, i) => <span key={i} style={{display:"inline-block",width:10,height:10,backgroundColor:c,borderRadius:2}} />)}
+        {["#1e1e2e", "#3b1d5c", "#6b2dab", "#9333ea", "#c084fc"].map((c, i) => (
+          <span key={i} style={{ display: "inline-block", width: 10, height: 10, backgroundColor: c, borderRadius: 2 }} />
+        ))}
         <span className="text-xs text-gray-600">More</span>
       </div>
     </div>
@@ -277,11 +317,43 @@ export default function Portfolio() {
 
   const navLinks = ["home", "works", "about-me", "contact"];
 
+  const [darkMode, setDarkMode] = useState(true);
+
+  useEffect(() => {
+    const cls = document.documentElement.classList;
+    if (darkMode) cls.add("dark");
+    else cls.remove("dark");
+  }, [darkMode]);
+
+  // Inject custom electricity-lightning cursor only on portfolio page
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://cdn.cursors-4u.net/cursors/animated/cur1-11-47e999d7-32.css";
+    link.id = "portfolio-cursor-css";
+    document.head.appendChild(link);
+    return () => {
+      document.getElementById("portfolio-cursor-css")?.remove();
+    };
+  }, []);
+
+  const isDark = darkMode;
+  const bgPage = isDark ? "#0a0a12" : "#f5f5f7";
+  const textPage = isDark ? "text-gray-300" : "text-gray-700";
+
   return (
-    <div className="min-h-screen text-gray-300" style={{ fontFamily: "'JetBrains Mono', 'Fira Code', monospace" }}>
-     <div className="fixed inset-0 z-0">
-  <FallingPattern color="#a855f7" backgroundColor="#0d0d12" duration={80} blurIntensity="0.3rem" density={2} />
-</div><div className="relative z-10">
+    <div
+      className={`min-h-screen relative ${textPage}`}
+      style={{ fontFamily: "'JetBrains Mono', 'Fira Code', monospace", backgroundColor: bgPage }}
+    >
+      <FallingPattern
+        color={isDark ? "rgba(168, 85, 247, 0.95)" : "rgba(124, 58, 237, 0.75)"}
+        backgroundColor={bgPage}
+        duration={90}
+        blurIntensity={isDark ? "0.18em" : "0.12em"}
+        density={1.35}
+      />
+
       {/* Left line */}
       <div className="fixed left-16 top-0 bottom-0 w-px bg-gray-700/30 z-10 hidden md:block" />
 
@@ -295,22 +367,35 @@ export default function Portfolio() {
       </div>
 
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-30 bg-[#1e1e2e]/95 backdrop-blur-md border-b border-gray-700/30">
+      <nav
+        className="fixed top-0 left-0 right-0 z-30 backdrop-blur-md border-b border-gray-700/30"
+        style={{ backgroundColor: isDark ? "rgba(30,30,46,0.85)" : "rgba(245,245,247,0.85)" }}
+      >
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 border border-purple-400 rounded flex items-center justify-center">
               <span className="text-purple-400 text-xs font-bold">D</span>
-            </div><SpecialText loop>DarkSeidBull</SpecialText></div>
+            </div>
+            <span className={isDark ? "text-white" : "text-gray-900"}>
+              <SpecialText loop>DarkSeidBull</SpecialText>
+            </span>
+          </div>
           <div className="hidden md:flex items-center gap-6">
             {navLinks.map(id => (
               <button key={id} onClick={() => scrollTo(id)}
-                className={`text-xs transition-colors hover:text-white flex items-center gap-1 ${activeSection === id ? "text-purple-400" : "text-gray-500"}`}>
+                className={`text-xs transition-colors hover:text-white flex items-center gap-1 relative ${activeSection === id ? "text-purple-400" : isDark ? "text-gray-500" : "text-gray-600"}`}>
                 <span className="text-purple-400">#</span>
-                {id}
-                {activeSection === id && <span className="block h-px w-full bg-purple-400 absolute bottom-0 left-0" />}
+                <SpecialText key={id + activeSection}>{id}</SpecialText>
+                {activeSection === id && <span className="block h-px w-full bg-purple-400 absolute -bottom-1 left-0" />}
               </button>
             ))}
-            <button className="w-7 h-7 rounded-full border border-gray-600 flex items-center justify-center text-gray-500 hover:text-white text-xs transition-colors">☀</button>
+            <button
+              onClick={() => setDarkMode(d => !d)}
+              aria-label="Toggle theme"
+              className="w-7 h-7 rounded-full border border-gray-600 flex items-center justify-center text-gray-500 hover:text-white text-xs transition-colors"
+            >
+              {isDark ? "☀" : "🌙"}
+            </button>
           </div>
           <button className="md:hidden text-gray-400" onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <CloseIcon /> : <MenuIcon />}
@@ -323,6 +408,12 @@ export default function Portfolio() {
                 <span className="text-purple-400"># </span><SpecialText key={id}>{id}</SpecialText>
               </button>
             ))}
+            <button
+              onClick={() => setDarkMode(d => !d)}
+              className="text-left text-gray-400 hover:text-white text-sm"
+            >
+              {isDark ? "☀ Light mode" : "🌙 Dark mode"}
+            </button>
           </div>
         )}
       </nav>
@@ -419,8 +510,8 @@ export default function Portfolio() {
                     {p.tags.map(t => <span key={t} className="text-gray-600 text-xs">{t}</span>)}
                   </div>
                   <div className="p-4 flex flex-col flex-1">
-                    <div className="text-xs text-purple-400/60 mb-1">{p.role}</div>
-                    <h3 className="text-white font-semibold text-sm mb-2">{p.title}</h3>
+                    <div className="text-xs text-purple-400/60 mb-1"><SpecialText>{p.role}</SpecialText></div>
+                    <h3 className="text-white font-semibold text-sm mb-2"><SpecialText>{p.title}</SpecialText></h3>
                     <p className="text-gray-600 text-xs leading-relaxed flex-1">{p.desc}</p>
                     <div className="flex gap-2 mt-4">
                       {p.code && (
@@ -509,7 +600,7 @@ export default function Portfolio() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     {skills.map((s, si) => (
                       <div key={s.name} className="flex items-center gap-3">
-                        <span className="text-gray-400 text-xs w-36 shrink-0">{s.name}</span>
+                        <span className="text-gray-400 text-xs w-36 shrink-0"><SpecialText>{s.name}</SpecialText></span>
                         <div className="flex-1 bg-gray-800 rounded-full h-1.5 overflow-hidden">
                           <div
                             className={`h-full rounded-full ${LEVEL_BAR[s.level]} transition-all duration-1000`}
@@ -533,7 +624,7 @@ export default function Portfolio() {
             {FUN_FACTS.map((f, i) => (
               <div>
                 <div className="border border-gray-700/40 px-4 py-2 text-gray-500 text-xs hover:border-purple-500/40 hover:text-gray-300 transition-all flex items-center gap-2">
-                  <span>{f.icon}</span> {f.text}
+                  <span>{f.icon}</span> <SpecialText>{f.text}</SpecialText>
                 </div>
               </div>
             ))}
@@ -596,7 +687,7 @@ export default function Portfolio() {
             ].map((s, i) => (
               <div>
                 <a href={s.href} target="_blank" className="flex items-center gap-3 text-gray-500 hover:text-white text-xs transition-colors py-1">
-                  <span className="text-purple-400">{s.icon}</span> {s.label}
+                  <span className="text-purple-400">{s.icon}</span> <SpecialText>{s.label}</SpecialText>
                 </a>
               </div>
             ))}
@@ -631,7 +722,6 @@ export default function Portfolio() {
         </footer>
 
       </div>
-    </div>
     </div>
   );
 }
