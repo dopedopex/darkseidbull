@@ -260,17 +260,16 @@ function renderLine(line: string) {
     const pos = remaining.indexOf(url);
     if (pos !== -1) {
       if (pos > 0) parts.push(<span key={idx++}>{remaining.slice(0, pos)}</span>);
-      parts.push(
-        
-          key={idx++}
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-green-300 underline hover:text-white transition-colors"
-        >
-          {url}
-        </a>
-      );
+    parts.push(
+  <a key={idx++}
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-green-300 underline hover:text-white transition-colors"
+  >
+    {url}
+  </a>
+);
       remaining = remaining.slice(pos + url.length);
     }
   });
