@@ -346,7 +346,7 @@ export default function Portfolio() {
       className={`min-h-screen relative ${textPage}`}
       style={{ fontFamily: "'JetBrains Mono', 'Fira Code', monospace", backgroundColor: bgPage }}
     >
-      <div className="fixed inset-0 z-0">
+      <div className="fixed inset-0" style={{zIndex: -1}}>
         <FallingPattern
           color={isDark ? "rgba(168, 85, 247, 0.95)" : "rgba(124, 58, 237, 0.75)"}
           backgroundColor={bgPage}
