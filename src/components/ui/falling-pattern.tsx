@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 export function FallingPattern({ color = '#00ff88', backgroundColor = '#0d0d0d', duration = 80, blurIntensity = '0.5rem', density = 2, className = '' }) {
   const generateBackgroundImage = () => {
@@ -21,7 +21,7 @@ export function FallingPattern({ color = '#00ff88', backgroundColor = '#0d0d0d',
 
   const bgSize = '300px 235px, 300px 235px, 300px 235px, 300px 252px, 300px 252px, 300px 252px, 300px 150px, 300px 150px, 300px 150px, 300px 253px, 300px 253px, 300px 253px, 300px 204px, 300px 204px, 300px 204px, 300px 134px, 300px 134px, 300px 134px, 300px 179px, 300px 179px, 300px 179px, 300px 299px, 300px 299px, 300px 299px, 300px 215px, 300px 215px, 300px 215px, 300px 281px, 300px 281px, 300px 281px, 300px 158px, 300px 158px, 300px 158px, 300px 210px, 300px 210px, 300px 210px';
 
-  const animId = 'falling-' + Math.random().toString(36).slice(2);
+  const animId = useMemo(() => `falling-${Math.random().toString(36).slice(2)}`, []);
 
   return (
     <div className={'relative h-full w-full ' + className} style={{ backgroundColor }}>
@@ -38,14 +38,17 @@ export function FallingPattern({ color = '#00ff88', backgroundColor = '#0d0d0d',
           position: 'absolute', inset: 0,
           backgroundImage: generateBackgroundImage(),
           backgroundSize: bgSize,
+          opacity: 0.9,
+          willChange: 'background-position',
+          transform: 'translateZ(0)',
         }}
       />
       <div
         style={{
           position: 'absolute', inset: 0,
-          backdropFilter: `blur(${blurIntensity})`,
           backgroundImage: `radial-gradient(circle at 50% 50%, transparent 0, transparent 2px, ${backgroundColor} 2px)`,
           backgroundSize: `${8 * density}px ${8 * density}px`,
+          opacity: blurIntensity === '0' ? 1 : 0.72,
         }}
       />
     </div>

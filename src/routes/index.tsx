@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import bullPills from "@/assets/bull-pills.png";
 import { SpecialText } from "@/components/ui/special-text";
@@ -15,9 +15,10 @@ function Index() {
   const navigate = useNavigate();
   const [screen, setScreen] = useState<Screen>("home");
   const [hovered, setHovered] = useState<"blue" | "red" | null>(null);
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [textKey, setTextKey] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const glowRef = useRef<HTMLSpanElement>(null);
+  const frameRef = useRef<number | null>(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -43,7 +44,15 @@ function Index() {
   }, [screen]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    setCursorPos({ x: e.clientX, y: e.clientY });
+    if (!glowRef.current) return;
+    const x = e.clientX - 30;
+    const y = e.clientY - 30;
+    if (frameRef.current) cancelAnimationFrame(frameRef.current);
+    frameRef.current = requestAnimationFrame(() => {
+      if (glowRef.current) {
+        glowRef.current.style.transform = `translate(${x}px, ${y}px)`;
+      }
+    });
   };
 
   return (
@@ -79,14 +88,14 @@ function Index() {
             {/* DESKTOP CURSOR GLOW */}
             {hovered && (
               <span
+                ref={glowRef}
                 className="pointer-events-none fixed z-50 rounded-full"
                 style={{
-                  left: cursorPos.x,
-                  top: cursorPos.y,
+                  left: 0,
+                  top: 0,
                   width: 60,
                   height: 60,
-                  transform: "translate(-50%, -50%)",
-                  transition: "left 0.03s linear, top 0.03s linear",
+                  transform: "translate(-9999px, -9999px)",
                   boxShadow:
                     hovered === "blue"
                       ? "0 0 40px 20px rgba(59,130,246,0.8), 0 0 80px 40px rgba(59,130,246,0.4)"
@@ -121,7 +130,7 @@ function Index() {
                   }}
                 >
                   <span
-                    className={`absolute left-1/2 -translate-x-1/2 -top-10 px-4 py-2 rounded-full bg-blue-500/90 text-white text-xs md:text-sm font-medium whitespace-nowrap backdrop-blur-md border border-blue-300/40 shadow-lg shadow-blue-500/40 transition-all duration-300 ${
+                    className={`absolute left-1/2 -translate-x-1/2 -top-10 px-4 py-2 rounded-full bg-blue-500/95 text-white text-xs md:text-sm font-medium whitespace-nowrap border border-blue-300/40 shadow-lg shadow-blue-500/40 transition-all duration-300 ${
                       hovered === "blue"
                         ? "opacity-100 translate-y-0"
                         : "opacity-0 translate-y-2 pointer-events-none"
@@ -151,7 +160,7 @@ function Index() {
 }}
                 >
                   <span
-                    className={`absolute left-1/2 -translate-x-1/2 -top-10 px-4 py-2 rounded-full bg-red-500/90 text-white text-xs md:text-sm font-medium whitespace-nowrap backdrop-blur-md border border-red-300/40 shadow-lg shadow-red-500/40 transition-all duration-300 ${
+                    className={`absolute left-1/2 -translate-x-1/2 -top-10 px-4 py-2 rounded-full bg-red-500/95 text-white text-xs md:text-sm font-medium whitespace-nowrap border border-red-300/40 shadow-lg shadow-red-500/40 transition-all duration-300 ${
                       hovered === "red"
                         ? "opacity-100 translate-y-0"
                         : "opacity-0 translate-y-2 pointer-events-none"
