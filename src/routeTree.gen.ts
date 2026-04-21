@@ -9,12 +9,19 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TerminalRouteImport } from './routes/terminal'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as OsSelectRouteImport } from './routes/os-select'
+import { Route as ModeSelectRouteImport } from './routes/mode-select'
 import { Route as LoadingRedRouteImport } from './routes/loading-red'
 import { Route as LoadingBlueRouteImport } from './routes/loading-blue'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TerminalRoute = TerminalRouteImport.update({
+  id: '/terminal',
+  path: '/terminal',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PortfolioRoute = PortfolioRouteImport.update({
   id: '/portfolio',
   path: '/portfolio',
@@ -23,6 +30,11 @@ const PortfolioRoute = PortfolioRouteImport.update({
 const OsSelectRoute = OsSelectRouteImport.update({
   id: '/os-select',
   path: '/os-select',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModeSelectRoute = ModeSelectRouteImport.update({
+  id: '/mode-select',
+  path: '/mode-select',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoadingRedRoute = LoadingRedRouteImport.update({
@@ -45,23 +57,29 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/loading-blue': typeof LoadingBlueRoute
   '/loading-red': typeof LoadingRedRoute
+  '/mode-select': typeof ModeSelectRoute
   '/os-select': typeof OsSelectRoute
   '/portfolio': typeof PortfolioRoute
+  '/terminal': typeof TerminalRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/loading-blue': typeof LoadingBlueRoute
   '/loading-red': typeof LoadingRedRoute
+  '/mode-select': typeof ModeSelectRoute
   '/os-select': typeof OsSelectRoute
   '/portfolio': typeof PortfolioRoute
+  '/terminal': typeof TerminalRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/loading-blue': typeof LoadingBlueRoute
   '/loading-red': typeof LoadingRedRoute
+  '/mode-select': typeof ModeSelectRoute
   '/os-select': typeof OsSelectRoute
   '/portfolio': typeof PortfolioRoute
+  '/terminal': typeof TerminalRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -69,29 +87,49 @@ export interface FileRouteTypes {
     | '/'
     | '/loading-blue'
     | '/loading-red'
+    | '/mode-select'
     | '/os-select'
     | '/portfolio'
+    | '/terminal'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/loading-blue' | '/loading-red' | '/os-select' | '/portfolio'
+  to:
+    | '/'
+    | '/loading-blue'
+    | '/loading-red'
+    | '/mode-select'
+    | '/os-select'
+    | '/portfolio'
+    | '/terminal'
   id:
     | '__root__'
     | '/'
     | '/loading-blue'
     | '/loading-red'
+    | '/mode-select'
     | '/os-select'
     | '/portfolio'
+    | '/terminal'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoadingBlueRoute: typeof LoadingBlueRoute
   LoadingRedRoute: typeof LoadingRedRoute
+  ModeSelectRoute: typeof ModeSelectRoute
   OsSelectRoute: typeof OsSelectRoute
   PortfolioRoute: typeof PortfolioRoute
+  TerminalRoute: typeof TerminalRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terminal': {
+      id: '/terminal'
+      path: '/terminal'
+      fullPath: '/terminal'
+      preLoaderRoute: typeof TerminalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/portfolio': {
       id: '/portfolio'
       path: '/portfolio'
@@ -104,6 +142,13 @@ declare module '@tanstack/react-router' {
       path: '/os-select'
       fullPath: '/os-select'
       preLoaderRoute: typeof OsSelectRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mode-select': {
+      id: '/mode-select'
+      path: '/mode-select'
+      fullPath: '/mode-select'
+      preLoaderRoute: typeof ModeSelectRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/loading-red': {
@@ -134,8 +179,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoadingBlueRoute: LoadingBlueRoute,
   LoadingRedRoute: LoadingRedRoute,
+  ModeSelectRoute: ModeSelectRoute,
   OsSelectRoute: OsSelectRoute,
   PortfolioRoute: PortfolioRoute,
+  TerminalRoute: TerminalRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
