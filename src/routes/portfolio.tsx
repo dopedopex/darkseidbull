@@ -25,6 +25,11 @@ function SpecialText({ children, loop = false, className = "" }: SpecialTextProp
   const CHARS = "_!X$0-+*#";
 
   React.useEffect(() => {
+    if (!loop) {
+      setDisplay(text);
+      return;
+    }
+
     // Static mode: just show text, no animation
     if (isStatic) {
       setDisplay(text);
@@ -62,7 +67,7 @@ function SpecialText({ children, loop = false, className = "" }: SpecialTextProp
           if (loop) setTimeout(() => setKey((k) => k + 1), 3000);
         }
       }
-    }, 18);
+    }, 36);
     return () => clearInterval(iv);
   }, [key, text, loop, isStatic]);
 
@@ -377,8 +382,8 @@ export default function Portfolio() {
           </div>
 
           {/* Navbar */}
-          <nav
-            className="fixed top-0 left-0 right-0 z-30 backdrop-blur-md border-b border-gray-700/30"
+            <nav
+              className="fixed top-0 left-0 right-0 z-30 border-b border-gray-700/30"
             style={{ backgroundColor: isDark ? "rgba(30,30,46,0.85)" : "rgba(245,245,247,0.85)" }}
           >
             <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
