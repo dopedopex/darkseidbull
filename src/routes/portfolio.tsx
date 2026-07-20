@@ -490,7 +490,7 @@ export default function Portfolio() {
                     <div className="flex items-center gap-2 mb-3">
                       <div className="w-2.5 h-2.5 rounded-sm bg-purple-500" />
                       <span className="text-xs text-gray-500">Currently working on</span>
-                      <span className="text-white text-xs font-bold">Republic AI Testnet</span>
+                      <span className="text-white text-xs font-bold">LitDEX &amp; zkBet</span>
                     </div>
                     <div className="grid grid-cols-2 gap-2 text-xs">
                       {[
