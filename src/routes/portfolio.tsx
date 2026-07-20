@@ -562,6 +562,11 @@ export default function Portfolio() {
                               Live &lt;-&gt; <ExternalLinkIcon size={10} />
                             </a>
                           )}
+                          {p.liveDisabled && (
+                            <span aria-disabled="true" className="px-3 py-1.5 border border-gray-700 text-gray-600 text-xs flex items-center gap-1 opacity-60 cursor-default select-none">
+                              {p.liveLabel ?? "Stopped"}
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>
