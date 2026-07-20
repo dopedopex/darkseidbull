@@ -192,22 +192,41 @@ const LEVEL_BAR: Record<string, string> = {
 };
 
 // ── Projects ───────────────────────────────────────────────────────────────
-const PROJECTS = [
+type Project = {
+  title: string;
+  role: string;
+  desc: string;
+  tags: string[];
+  live?: string;
+  code?: string;
+  badge?: string;
+  liveDisabled?: boolean;
+  liveLabel?: string;
+};
+
+const PROJECTS: Project[] = [
   {
-    title: "republicstats.xyz",
-    role: "Builder & Maintainer",
-    desc: "Real-time analytics dashboard for Republic AI ecosystem — live nodes, telemetry stats, merge counts, activity insights and infrastructure transparency.",
-    tags: ["FastAPI", "Svelte", "Python", "VPS"],
-    live: "https://republicstats.xyz",
-    code: "https://github.com/0xDarkSeidBull",
-    badge: "Moderator",
+    title: "LitDEX",
+    role: "Founder & Full-Stack Builder",
+    desc: "Full-featured DEX and DeFi hub built on LiteForge/LitVM (Chain ID 4441) — covering token swaps, NFT marketplace, points system, staking, and an integrated gaming ecosystem.",
+    tags: ["Solidity", "React", "Node.js"],
+    live: "https://litdex.test-hub.xyz/",
+    badge: "Founder & Lead Dev",
+  },
+  {
+    title: "zkBet",
+    role: "Founder & Full-Stack Builder",
+    desc: "PVP prediction and betting platform with on-chain zkLTC stake verification, Mystery Box rewards, and dual-chain backend support across LitVM and Base Mainnet (USDC).",
+    tags: ["Solidity", "React", "Node.js"],
+    live: "https://zkbet.test-hub.xyz/",
+    badge: "Founder & Lead Dev",
   },
   {
     title: "QuipStats Dashboard",
     role: "Infrastructure & Quantum Dev",
     desc: "Real-time analytics for Quip Network AI ecosystem with live node stats, telemetry, and Grafana monitoring integration.",
     tags: ["HTML", "Grafana", "Python"],
-    live: "https://quipstats.vercel.app/",
+    live: "https://quipstats.test-hub.xyz/",
     code: "https://github.com/0xDarkSeidBull/quipstats",
     badge: "Infra Dev",
   },
@@ -237,6 +256,16 @@ const PROJECTS = [
     role: "Developer",
     desc: "Modern communication interface built with Hyperscale API — sleek UI, secure interactions, and next-gen community networking.",
     tags: ["Node.js", "API", "React"],
+  },
+  {
+    title: "republicstats.xyz",
+    role: "Builder & Maintainer",
+    desc: "Real-time analytics dashboard for Republic AI ecosystem — live nodes, telemetry stats, merge counts, activity insights and infrastructure transparency.",
+    tags: ["FastAPI", "Svelte", "Python", "VPS"],
+    liveDisabled: true,
+    liveLabel: "Stopped",
+    code: "https://github.com/0xDarkSeidBull",
+    badge: "Moderator",
   },
 ];
 
