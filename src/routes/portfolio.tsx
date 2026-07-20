@@ -4,9 +4,14 @@ import { FallingPattern } from "@/components/ui/falling-pattern";
 
 // ── Static mode context ────────────────────────────────────────────────────
 // Read once from URL: /portfolio?anim=false → static mode
-const isStaticMode = () =>
-  typeof window !== "undefined" &&
-  new URLSearchParams(window.location.search).get("anim") === "false";
+const isStaticMode = () => {
+  if (typeof window === "undefined") return false;
+  const params = new URLSearchParams(window.location.search);
+  const anim = params.get("anim");
+  if (anim === "true") return false;
+  if (anim === "false") return true;
+  return true; // no anim param at all → default static
+};
 
 const StaticCtx = React.createContext(false);
 

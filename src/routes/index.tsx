@@ -4,9 +4,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import bullPills from "@/assets/bull-pills.png";
 import { SpecialText } from "@/components/ui/special-text";
 import RippleLoader from "@/components/ui/pulsating-loader";
+import Portfolio from "./portfolio";
 
 export const Route = createFileRoute("/")({
-  component: Index,
+  component: Portfolio,
 });
 
 type Screen = "home" | "loading-red" | "loading-blue";
