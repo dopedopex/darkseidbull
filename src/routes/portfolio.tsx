@@ -192,22 +192,41 @@ const LEVEL_BAR: Record<string, string> = {
 };
 
 // ── Projects ───────────────────────────────────────────────────────────────
-const PROJECTS = [
+type Project = {
+  title: string;
+  role: string;
+  desc: string;
+  tags: string[];
+  live?: string;
+  code?: string;
+  badge?: string;
+  liveDisabled?: boolean;
+  liveLabel?: string;
+};
+
+const PROJECTS: Project[] = [
   {
-    title: "republicstats.xyz",
-    role: "Builder & Maintainer",
-    desc: "Real-time analytics dashboard for Republic AI ecosystem — live nodes, telemetry stats, merge counts, activity insights and infrastructure transparency.",
-    tags: ["FastAPI", "Svelte", "Python", "VPS"],
-    live: "https://republicstats.xyz",
-    code: "https://github.com/0xDarkSeidBull",
-    badge: "Moderator",
+    title: "LitDEX",
+    role: "Founder & Full-Stack Builder",
+    desc: "Full-featured DEX and DeFi hub built on LiteForge/LitVM (Chain ID 4441) — covering token swaps, NFT marketplace, points system, staking, and an integrated gaming ecosystem.",
+    tags: ["Solidity", "React", "Node.js"],
+    live: "https://litdex.test-hub.xyz/",
+    badge: "Founder & Lead Dev",
+  },
+  {
+    title: "zkBet",
+    role: "Founder & Full-Stack Builder",
+    desc: "PVP prediction and betting platform with on-chain zkLTC stake verification, Mystery Box rewards, and dual-chain backend support across LitVM and Base Mainnet (USDC).",
+    tags: ["Solidity", "React", "Node.js"],
+    live: "https://zkbet.test-hub.xyz/",
+    badge: "Founder & Lead Dev",
   },
   {
     title: "QuipStats Dashboard",
     role: "Infrastructure & Quantum Dev",
     desc: "Real-time analytics for Quip Network AI ecosystem with live node stats, telemetry, and Grafana monitoring integration.",
     tags: ["HTML", "Grafana", "Python"],
-    live: "https://quipstats.vercel.app/",
+    live: "https://quipstats.test-hub.xyz/",
     code: "https://github.com/0xDarkSeidBull/quipstats",
     badge: "Infra Dev",
   },
@@ -237,6 +256,16 @@ const PROJECTS = [
     role: "Developer",
     desc: "Modern communication interface built with Hyperscale API — sleek UI, secure interactions, and next-gen community networking.",
     tags: ["Node.js", "API", "React"],
+  },
+  {
+    title: "republicstats.xyz",
+    role: "Builder & Maintainer",
+    desc: "Real-time analytics dashboard for Republic AI ecosystem — live nodes, telemetry stats, merge counts, activity insights and infrastructure transparency.",
+    tags: ["FastAPI", "Svelte", "Python", "VPS"],
+    liveDisabled: true,
+    liveLabel: "Stopped",
+    code: "https://github.com/0xDarkSeidBull",
+    badge: "Moderator",
   },
 ];
 
@@ -461,7 +490,7 @@ export default function Portfolio() {
                     <div className="flex items-center gap-2 mb-3">
                       <div className="w-2.5 h-2.5 rounded-sm bg-purple-500" />
                       <span className="text-xs text-gray-500">Currently working on</span>
-                      <span className="text-white text-xs font-bold">Republic AI Testnet</span>
+                      <span className="text-white text-xs font-bold">LitDEX &amp; zkBet</span>
                     </div>
                     <div className="grid grid-cols-2 gap-2 text-xs">
                       {[
@@ -533,6 +562,11 @@ export default function Portfolio() {
                               Live &lt;-&gt; <ExternalLinkIcon size={10} />
                             </a>
                           )}
+                          {p.liveDisabled && (
+                            <span aria-disabled="true" className="px-3 py-1.5 border border-gray-700 text-gray-600 text-xs flex items-center gap-1 opacity-60 cursor-default select-none">
+                              {p.liveLabel ?? "Stopped"}
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -568,11 +602,11 @@ export default function Portfolio() {
                     <div className="bg-[#252535] border border-gray-700/40 p-3 flex items-center gap-3">
                       <div className="w-2.5 h-2.5 rounded-sm bg-purple-500" />
                       <span className="text-xs text-gray-500">Currently working on</span>
-                      <span className="text-white text-xs font-bold">Republic AI Testnet</span>
+                      <span className="text-white text-xs font-bold">LitDEX &amp; zkBet</span>
                     </div>
                     {[
                       { emoji: "🟢", label: "Redbelly Network • Mainnet", sub: "Active Mainnet Validator", href: "https://redbelly.routescan.io/address/0xd688ccf03589347CEa7654F444458419069FdbBe" },
-                      { emoji: "🔴", label: "Republic AI • Testnet", sub: "Active Validator + Community Moderator", href: "https://explorer.republicai.io/validators/raivaloper1xcr42hlh85kutaqtmyxw2zu8pr3nk5rkh0nz2z" },
+                      { emoji: "🔴", label: "Republic AI • Testnet", sub: "InActive Validator + Community Moderator", href: "https://explorer.republicai.io/validators/raivaloper1xcr42hlh85kutaqtmyxw2zu8pr3nk5rkh0nz2z" },
                     ].map(v => (
                       <div key={v.label} className="border border-gray-700/40 p-3">
                         <div className="flex items-center gap-2 mb-1">
