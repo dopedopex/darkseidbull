@@ -602,11 +602,11 @@ export default function Portfolio() {
                     <div className="bg-[#252535] border border-gray-700/40 p-3 flex items-center gap-3">
                       <div className="w-2.5 h-2.5 rounded-sm bg-purple-500" />
                       <span className="text-xs text-gray-500">Currently working on</span>
-                      <span className="text-white text-xs font-bold">Republic AI Testnet</span>
+                      <span className="text-white text-xs font-bold">LitDEX &amp; zkBet</span>
                     </div>
                     {[
                       { emoji: "🟢", label: "Redbelly Network • Mainnet", sub: "Active Mainnet Validator", href: "https://redbelly.routescan.io/address/0xd688ccf03589347CEa7654F444458419069FdbBe" },
-                      { emoji: "🔴", label: "Republic AI • Testnet", sub: "Active Validator + Community Moderator", href: "https://explorer.republicai.io/validators/raivaloper1xcr42hlh85kutaqtmyxw2zu8pr3nk5rkh0nz2z" },
+                      { emoji: "🔴", label: "Republic AI • Testnet", sub: "InActive Validator + Community Moderator", href: "https://explorer.republicai.io/validators/raivaloper1xcr42hlh85kutaqtmyxw2zu8pr3nk5rkh0nz2z" },
                     ].map(v => (
                       <div key={v.label} className="border border-gray-700/40 p-3">
                         <div className="flex items-center gap-2 mb-1">
