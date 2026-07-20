@@ -1,6 +1,6 @@
 {
   "redirects": [
-    { "source": "/", "destination": "/portfolio?anim=true", "permanent": false }
+    { "source": "/", "destination": "/portfolio?anim=false", "permanent": false }
   ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
